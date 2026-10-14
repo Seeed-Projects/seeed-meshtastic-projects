@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { parseSubmission, validateCatalog, httpsUrl } from '../scripts/catalog.mjs';
+import { parseSubmission, validateCatalog, validateProject, httpsUrl } from '../scripts/catalog.mjs';
 import { CATEGORIES, PRODUCTS } from '../docs/config.js';
 const fields = {
   'Project Title':'Example Mesh Build', 'Author / Maker':'A Maker',
@@ -17,7 +17,7 @@ function issue(overrides = {}) { return {number:42,body:Object.entries({...field
 test('GitHub form submission preserves multi-select values and optional fields',()=>{
   const p = parseSubmission(issue({'Setup Instructions':'_No response_'}),'2026-09-24');
   assert.equal(p.id,'community-42'); assert.deepEqual(p.products,['Wio Tracker L1 Pro','XIAO ESP32S3 Kit']);
-  assert.deepEqual(p.categories,['Hardware','Integrations']); assert.deepEqual(p.setup,[]); assert.equal(p.activity,null);
+  assert.deepEqual(p.categories,['Hardware','IOT']); assert.deepEqual(p.setup,[]); assert.equal(p.activity,null);
   assert.equal(p.issueNumber,42); assert.equal(p.resources.length,2);
 });
 test('GitHub image uploads and CRLF submissions are accepted',()=>{
@@ -25,11 +25,39 @@ test('GitHub image uploads and CRLF submissions are accepted',()=>{
   item.body = item.body.replace(/\n/g,'\r\n');
   assert.equal(parseSubmission(item).image,'https://github.com/user-attachments/assets/image-id');
 });
-test('public data never includes reward email; L2 social links are exported only for L2',()=>{
-  let p = parseSubmission(issue({'Email':'private@example.com','Social Links':'https://example.com/social'}));
-  assert.equal('email' in p,false); assert.equal(JSON.stringify(p).includes('private@example.com'),false); assert.deepEqual(p.socialLinks,[]);
-  p = parseSubmission(issue({'Related Activity':'Build With Wio Tracker L2 Pro','Social Links':'https://example.com/social'}));
-  assert.deepEqual(p.socialLinks,['https://example.com/social']);
+test('legacy Integration labels map to IOT and X1 submissions preserve image descriptions',()=>{
+  const caption='SenseCAP MeshTracker X1 showing the garden sensor dashboard.';
+  for(const legacy of ['Integration','Integrations','IOT']) {
+    const project=parseSubmission(issue({'Hardware':'SenseCAP MeshTracker X1','Category':`Hardware, ${legacy}`,'Cover Image Description':caption}));
+    assert.deepEqual(project.categories,['Hardware','IOT']);
+    assert.deepEqual(project.products,['SenseCAP MeshTracker X1']);
+    assert.equal(project.imageAlt,caption);
+  }
+  assert.equal(parseSubmission(issue()).imageAlt,'');
+});
+test('unuploaded photo placeholders are rejected and malformed caption data cannot enter the catalog',()=>{
+  assert.throws(()=>parseSubmission(issue({'Project Cover Image':'[ATTACH YOUR PHOTO HERE — replace this line with the image uploaded on GitHub]'})));
+  const project=parseSubmission(issue({'Cover Image Description':'An outdoor node.'}));
+  for(const imageAlt of [42,{},'x'.repeat(301)]) assert.throws(()=>validateProject({...project,imageAlt}),/cover image description/);
+  assert.equal(parseSubmission(issue({'Cover Image Description':' x '.repeat(150)})).imageAlt.length,300);
+});
+test('all project submissions preserve social links while private reward email stays out of the catalog',()=>{
+  for(const activity of ['No related activity','Build With Wio Tracker L2 Pro','Meshtastic Build-Off 2026']) {
+    const p = parseSubmission(issue({'Related Activity':activity,'Email':'private@example.com','Social Links':'https://example.com/social\n[Demo video](https://www.youtube.com/watch?v=demo)'}));
+    assert.equal('email' in p,false); assert.equal(JSON.stringify(p).includes('private@example.com'),false);
+    assert.deepEqual(p.socialLinks,['https://example.com/social','https://www.youtube.com/watch?v=demo']);
+  }
+  assert.deepEqual(parseSubmission(issue()).socialLinks,[]);
+});
+test('social links retain HTTPS and twenty-link validation for ordinary and L2 projects',()=>{
+  const links=Array.from({length:20},(_,index)=>`https://example.com/post/${index}`);
+  for(const activity of ['No related activity','Build With Wio Tracker L2 Pro']) {
+    assert.deepEqual(parseSubmission(issue({'Related Activity':activity,'Social Links':links.join('\n')})).socialLinks,links);
+    assert.throws(()=>parseSubmission(issue({'Related Activity':activity,'Social Links':[...links,'https://example.com/post/21'].join('\n')})),/Invalid social links/);
+    for(const url of ['http://example.com/post','javascript:alert(1)','https://user:pass@example.com/post']) {
+      assert.throws(()=>parseSubmission(issue({'Related Activity':activity,'Social Links':url})));
+    }
+  }
 });
 test('unsafe links, unknown taxonomy, unchecked consent and duplicate headings are rejected',()=>{
   for (const url of ['javascript:alert(1)','http://example.com','https://user:pass@example.com']) assert.throws(()=>httpsUrl(url));
