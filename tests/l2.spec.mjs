@@ -76,7 +76,7 @@ test('social form selects approved projects, requires private email, and removes
  await page.locator('#share-form [name=post]').fill('https://x.com/maker/status/123456');await page.locator('#prepare-share').click();
  await expect(page.locator('#share-ready')).toBeVisible();
  const draft=new URL(await page.locator('#share-github').getAttribute('href')),body=draft.searchParams.get('body');
- expect(body).toContain('https://github.com/hack-embed/seeed-meshtastic-projects/issues/42');
+ expect(body).toContain('https://github.com/Seeed-Projects/seeed-meshtastic-projects/issues/42');
  expect(body).toContain('https://x.com/maker/status/123456');expect(body).not.toContain('Reported Metric Count');expect(draft.href).not.toContain('private');
  expect(await page.locator('#share-private-email').getAttribute('href')).toContain('private%40example.com');
  await page.locator('#share-form [name=post]').fill('https://x.com/maker/status/999');await expect(page.locator('#share-ready')).toBeHidden();

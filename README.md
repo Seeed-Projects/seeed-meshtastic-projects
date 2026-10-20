@@ -2,7 +2,11 @@
 
 An English-language community project collection for Seeed Mesh hardware. The website uses static HTML, CSS, and JavaScript with no frontend build or application server. GitHub Actions handles reviewed catalog updates; optional approval emails use a configured mail provider.
 
-**Website:** https://hack-embed.github.io/seeed-meshtastic-projects/
+**Website:** https://seeed-projects.github.io/seeed-meshtastic-projects/
+
+**Development fork:** https://github.com/Yvesgoat/seeed-meshtastic-projects
+
+Project and social submissions are opened in `Seeed-Projects/seeed-meshtastic-projects`. Earlier discussions remain in the original `hack-embed/seeed-meshtastic-projects` repository; their issue numbers are not reused here.
 
 ## Run locally
 

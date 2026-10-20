@@ -22,8 +22,9 @@ test('social forms reject unrelated sites, profiles, credentials and wrong video
  assert(validPostUrl('https://youtube.com/shorts/abc_123','youtube-shorts'));
  for(const url of ['https://x.com/maker','https://x.com.evil.test/maker/status/123','https://user:pass@x.com/maker/status/123','javascript:alert(1)'])assert(!validPostUrl(url,'x'));
  assert(!validPostUrl('https://youtube.com/shorts/abc','youtube'));
- assert.equal(issueNumberFromUrl('https://github.com/hack-embed/seeed-meshtastic-projects/issues/42'),42);
+ assert.equal(issueNumberFromUrl('https://github.com/Seeed-Projects/seeed-meshtastic-projects/issues/42'),42);
  assert.equal(issueNumberFromUrl('https://github.com/other/repo/issues/42'),null);
- assert.equal(issueNumberFromUrl('https://github.com.evil.test/hack-embed/seeed-meshtastic-projects/issues/42'),null);
+ assert.equal(issueNumberFromUrl('https://github.com/hack-embed/seeed-meshtastic-projects/issues/42'),null);
+ assert.equal(issueNumberFromUrl('https://github.com.evil.test/Seeed-Projects/seeed-meshtastic-projects/issues/42'),null);
  const draft=issueDraft('Test',{'Public Link':'https://x.com/maker/status/123'});assert.equal(new URL(draft.url).searchParams.get('title'),'Test');
 });
