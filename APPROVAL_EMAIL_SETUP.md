@@ -26,7 +26,7 @@ The website can encrypt a maker’s contact address in the browser and attach th
    | Variable | Value |
    | --- | --- |
    | `APPROVAL_EMAIL_FROM` | Verified sender address, optionally with its display name |
-   | `MESH_LAB_SITE_URL` | Canonical HTTPS site root, e.g. `https://hack-embed.github.io/seeed-meshtastic-projects/` |
+   | `MESH_LAB_SITE_URL` | Canonical HTTPS site root, e.g. `https://seeed-projects.github.io/seeed-meshtastic-projects/` |
 
 5. Edit `docs/notification-config.js`: set `enabled: true`, choose a stable `keyId`, and paste the entire **public** PEM into `publicKeyPem` using a JavaScript template literal. Never paste the private PEM or mail API key here. A public key is intentionally public. The workflow checks that its private key matches this public key before processing recipients.
 6. Deploy the site and confirm GitHub Actions has permission to write to the default branch. Its durable notification ledger is created at `.github/data/approval-notifications.json`. Existing repository branch rules must permit these bot commits as well as catalog updates.
@@ -62,7 +62,7 @@ An authorized maintainer can use `scripts/read-private-contact.mjs` on a secure 
 For example, using an existing secure directory **outside this checkout**:
 
 ```sh
-gh api repos/hack-embed/seeed-meshtastic-projects/issues/84 > /secure/path/share-84.json
+gh api repos/Seeed-Projects/seeed-meshtastic-projects/issues/84 > /secure/path/share-84.json
 node scripts/read-private-contact.mjs --issue /secure/path/share-84.json --project community-42 --private-key /secure/path/approval-private.pem --out /secure/path/contact-84.json
 ```
 
