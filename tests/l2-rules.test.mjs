@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {MILESTONES,validPostUrl} from '../docs/l2-config.js';
 import {issueNumberFromUrl,issueDraft,approvedL2Projects} from '../docs/form-utils.js';
 test('social reward thresholds match the activity brief',()=>{
- assert.deepEqual(MILESTONES.map(m=>[m.id,m.threshold]),[['reddit',100],['facebook',50],['x',30],['youtube',500],['youtube-shorts',1000]]);
+ assert.deepEqual(MILESTONES.map(m=>[m.id,m.threshold,m.metric]),[['reddit',200,'upvotes'],['facebook',100,'likes'],['x',100,'likes'],['youtube',1000,'organic views'],['youtube-shorts',1000,'organic views']]);
 });
 test('social project selector includes only published L2 activity submissions',()=>{
  const base={title:'L2 pocket game',author:'A Maker',activity:'l2-pro',products:['Wio Tracker L2 Pro'],issueNumber:42,addedAt:'2026-10-14'};
