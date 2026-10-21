@@ -1,5 +1,125 @@
 [
   {
+    "id": "cairn",
+    "title": "Cairn · Touchscreen MeshCore Firmware",
+    "author": "cvhviz / CVH Visuals",
+    "description": "Run MeshCore on Wio Tracker L2 Pro with touchscreen messaging, GPS and offline maps, radio tools, music playback, and voice recording. The L2 Pro build is tested on hardware, with separate builds for Wio Tracker L1 Pro and other supported boards.",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L2 Pro",
+      "Wio Tracker L1 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L2 Pro touchscreen model",
+      "Wio Tracker L1 Pro (OLED or e-ink)",
+      "microSD card for L2 maps and audio"
+    ],
+    "tags": [
+      "MeshCore",
+      "Cairn",
+      "Touch UI",
+      "Offline maps",
+      "GPS",
+      "Audio"
+    ],
+    "url": "https://github.com/cvhviz/CAIRN",
+    "image": "https://www.cvhvisuals.com/assets/img/cairn/cairn-device-1200.jpg",
+    "imageAlt": "CAIRN project image showing the chats interface on a Wio Tracker L2 Pro in its custom case, from CVH Visuals.",
+    "source": "https://www.cvhvisuals.com/lab.html#cairn",
+    "setup": [
+      "Select your exact board in the Cairn documentation and download its matching release. Features differ between L2 touchscreen and L1 builds.",
+      "Export your identity and contacts before a first installation. Follow the board guide: L2 uses an ESP32 installer, while L1 Pro uses UF2. A full L2 installation erases existing data.",
+      "Configure the regional LoRa settings and channels, then use the on-device interface or connect an official MeshCore app over Bluetooth.",
+      "For L2 maps and audio, prepare a FAT32 microSD card and follow the L2 guide for map downloads, music playback, and voice recording.",
+      "Use the documented Wi-Fi update flow for later L2 releases and check the release notes for board-specific limitations."
+    ],
+    "resources": [
+      {
+        "label": "GitHub project & firmware",
+        "url": "https://github.com/cvhviz/CAIRN"
+      },
+      {
+        "label": "Official website & device gallery",
+        "url": "https://www.cvhvisuals.com/lab.html#cairn"
+      },
+      {
+        "label": "Latest firmware release",
+        "url": "https://github.com/cvhviz/CAIRN/releases/latest"
+      },
+      {
+        "label": "Wio Tracker L2 Pro guide",
+        "url": "https://github.com/cvhviz/CAIRN/blob/main/docs/boards/wio-tracker-l2-pro.md"
+      },
+      {
+        "label": "Wio Tracker L1 Pro guide",
+        "url": "https://github.com/cvhviz/CAIRN/blob/main/docs/boards/wio-tracker-l1-pro.md"
+      }
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
+    "id": "wadamesh",
+    "title": "WADAMESH · Touch UI for MeshCore",
+    "author": "ALLFATHER BV / WADAMESH contributors",
+    "description": "Bring chats, channels, contacts, offline maps, and Lua apps directly to a MeshCore radio. Stable targets include LilyGo T-Deck and Heltec V4 TFT; the Wio Tracker L2 port is pre-release and still under hardware validation.",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L2 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L2 Pro (pre-release; hardware validation in progress)",
+      "LilyGo T-Deck / T-Deck Plus",
+      "Heltec V4 with TFT and touch",
+      "microSD card for supported offline-map builds"
+    ],
+    "tags": [
+      "MeshCore",
+      "WADAMESH",
+      "Touch UI",
+      "Offline maps",
+      "Lua apps",
+      "L2 pre-release"
+    ],
+    "url": "https://github.com/ALLFATHER-BV/wadamesh",
+    "image": "https://wadamesh.com/img/shot-home.png",
+    "imageAlt": "WADAMESH home widgets captured on a LilyGo T-Deck, from the official website; this is not an L2 screenshot.",
+    "source": "https://wadamesh.com/",
+    "setup": [
+      "Check the supported-board matrix and status before choosing a build. The Wio Tracker L2 port is for development and hardware validation; the repository does not promise a public L2 release until verification is complete.",
+      "For supported boards, follow the official standalone installer and board-specific instructions. The alternate Launcher installation path is for T-Deck only.",
+      "Back up your identity and settings as directed by the project, then configure the regional radio settings, contacts, and channels.",
+      "On builds with microSD support, use the documented tile-transfer workflow for offline maps and the Lua app documentation for optional apps."
+    ],
+    "resources": [
+      {
+        "label": "GitHub source code",
+        "url": "https://github.com/ALLFATHER-BV/wadamesh"
+      },
+      {
+        "label": "Official website & installer",
+        "url": "https://wadamesh.com/"
+      },
+      {
+        "label": "Supported boards & L2 status",
+        "url": "https://github.com/ALLFATHER-BV/wadamesh/blob/main/DEVICES.md"
+      },
+      {
+        "label": "User guide",
+        "url": "https://wadamesh.com/docs.html"
+      }
+    ],
+    "socialLinks": [
+      "https://www.youtube.com/watch?v=7uFbi2WXm8s&t=1681s"
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
     "id": "meshcore-remoteterm",
     "title": "RemoteTerm · MeshCore Web Terminal",
     "author": "jkingsman / RemoteTerm contributors; Seeed Studio guide",
