@@ -84,11 +84,12 @@ $('share-copy').addEventListener('click',async()=>{
 });
 function openLinkedForm(){if(location.hash==='#submit-social')openShareDialog();}
 window.addEventListener('hashchange',openLinkedForm);openLinkedForm();
-// Idea cards show approved L2 Pro submissions only; the community card previews the whole Mesh Hub.
+// Idea cards use published L2 Pro projects, independently of reward activity enrollment.
+// The community card previews the whole Mesh Hub.
 const coverUrl=value=>{try{const u=new URL(value);return u.protocol==='https:' && !u.username && !u.password ? u.href : '';}catch{return '';}};
 const withCover=projects=>projects.filter(p=>coverUrl(p.image)).sort((a,b)=>b.addedAt.localeCompare(a.addedAt));
 function renderExamples(projects) {
-  const hub=withCover(projects), pool=hub.filter(p=>p.activity===L2.activity), used=new Set();
+  const hub=withCover(projects), pool=hub.filter(p=>Array.isArray(p.products) && p.products.includes(L2.product)), used=new Set();
   for(const card of document.querySelectorAll('[data-idea]')) {
     const match=pool.find(p=>p.categories.includes(card.dataset.idea) && !used.has(p.id)) || pool.find(p=>p.categories.includes(card.dataset.idea));
     const example=document.createElement(match ? 'a' : 'button');example.className='idea-example';

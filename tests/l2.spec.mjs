@@ -132,11 +132,11 @@ test('Hub activity link expands the inline submission and repository import keep
  await expect(page.locator('[name=image]')).toHaveValue('https://example.com/photo.jpg');await expect(page.locator('textarea[name=setup]')).toHaveValue('Flash the firmware.\nPair the Wio Tracker L2 Pro.');await expect(page.locator('[name=author]')).toHaveValue('example');
 });
 
-test('idea cards show only L2 Pro examples, use photo descriptions, and invite new builds',async({page})=>{
+test('idea cards show published L2 Pro projects independently of reward activity enrollment',async({page})=>{
  await page.route('**/data/projects.json',route=>route.fulfill({json:[
-  {...approvedProject,id:'case-a',title:'L2 Case',categories:['3D Prints & Enclosures'],image:'https://example.com/a.png',imageAlt:'An L2 case on a workbench.',addedAt:'2026-01-01'},
-  {id:'case-b',title:'Newer L1 Case',categories:['3D Prints & Enclosures','Firmware'],image:'https://example.com/b.png',activity:null,addedAt:'2026-06-01'},
-  {id:'unsafe',title:'Unsafe',categories:['APP'],image:'javascript:alert(1)',activity:null,addedAt:'2026-07-01'},
+  {...approvedProject,id:'case-a',title:'L2 Case',categories:['3D Prints & Enclosures'],image:'https://example.com/a.png',imageAlt:'An L2 case on a workbench.',activity:null,issueNumber:undefined,addedAt:'2026-01-01'},
+  {id:'case-b',title:'Newer L1 Case',categories:['3D Prints & Enclosures','Firmware'],products:['Wio Tracker L1 Pro'],image:'https://example.com/b.png',activity:'l2-pro',addedAt:'2026-06-01'},
+  {id:'unsafe',title:'Unsafe',categories:['APP'],products:['Wio Tracker L2 Pro'],image:'javascript:alert(1)',activity:null,addedAt:'2026-07-01'},
  ]}));
  await page.goto('/l2.html#ideas');
  const card=name=>page.locator(`[data-idea="${name}"] .idea-example`);
