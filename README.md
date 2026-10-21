@@ -91,6 +91,8 @@ The 19 curated entries include all 10 enclosure projects from the supplied Wio T
 
 The activity’s Submit a Project buttons—including the participation step—open the shared form from `docs/partials/project-form.html`, initialized by `docs/project-form.js`. Wio Tracker L2 Pro and its activity are preselected.
 
+The What Will You Build? cards show matching examples from all published catalog projects that list Wio Tracker L2 Pro, including curated projects without reward activity enrollment. Each example links to its Project Hub details. Categories without a matching project retain the submission invitation. Example selection does not change eligibility for the separate social reward form.
+
 Submit Your Link opens a separate social reward form, also available through `l2.html#submit-social`. Makers select a previously approved L2 project from the published catalog, choose a platform, add a direct post/video link, and provide a required private contact email. The form no longer asks for current upvotes/views or repeats the platform threshold beneath the selection. Empty or unavailable project lists show an explanation and a submission or retry action. The form checks the selected project and supported post URL format; AE still verifies the maker’s GitHub account, actual approval, organic metrics, and reward eligibility. Social review issues must not receive the project catalog’s `ae-approved` label.
 
 Build Reward is a **Seeed Discount Coupon: $20 off orders of $100+**. Shipping does not count toward the minimum or receive the discount. Eligible purchases are in the Seeed Mesh product line, excluding XIAO development kits. A working project with an approved submission qualifies.
