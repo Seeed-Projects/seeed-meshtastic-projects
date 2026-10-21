@@ -243,7 +243,7 @@
     ],
     "author": "MeshCore Open community / Seeed Studio",
     "url": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_l1/",
-    "image": "https://files.seeedstudio.com/wiki/SenseCAP/Meshcore/MeshCoreOpen/MeshCore_Open_Project.png",
+    "image": "https://files.seeedstudio.com/wiki/SenseCAP/Meshcore/MeshCoreOpen/MeshCore_Open_L2_Pro.png",
     "source": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_l1/",
     "addedAt": "2026-09-24",
     "setup": [
@@ -283,7 +283,8 @@
         "url": "https://huggingface.co/zjs81/aeic-se-onnx"
       }
     ],
-    "activity": null
+    "activity": null,
+    "imageAlt": "Wio Tracker L2 Pro beside two phones showing original and AI-reconstructed images in MeshCore Open."
   },
   {
     "id": "easyskymesh",
