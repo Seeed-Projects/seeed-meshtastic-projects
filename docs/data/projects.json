@@ -1,5 +1,219 @@
 [
   {
+    "id": "meshcore-remoteterm",
+    "title": "RemoteTerm · MeshCore Web Terminal",
+    "author": "jkingsman / RemoteTerm contributors; Seeed Studio guide",
+    "description": "Run a browser-based MeshCore messaging and monitoring station on a Raspberry Pi with a XIAO ESP32S3 + Wio-SX1262 companion radio. View contacts and packets, exchange messages, and connect supported integrations such as MQTT.",
+    "categories": [
+      "APP",
+      "IOT"
+    ],
+    "products": [
+      "XIAO ESP32S3 Kit"
+    ],
+    "devices": [
+      "XIAO ESP32S3 + Wio-SX1262 Kit",
+      "Raspberry Pi Zero 2 W"
+    ],
+    "tags": [
+      "MeshCore",
+      "RemoteTerm",
+      "Remote terminal",
+      "Raspberry Pi",
+      "MQTT"
+    ],
+    "url": "https://wiki.seeedstudio.com/get_started_with_meshcore_remote_terminal/",
+    "image": "https://files.seeedstudio.com/wiki/SenseCAP/Meshcore/remoteterminal/first.png",
+    "imageAlt": "RemoteTerm for MeshCore overview from the Seeed Studio setup guide.",
+    "source": "https://wiki.seeedstudio.com/get_started_with_meshcore_remote_terminal/",
+    "setup": [
+      "Assemble the XIAO ESP32S3 + Wio-SX1262 Kit, attach its antenna, and flash the matching MeshCore Serial Companion firmware.",
+      "Prepare a Raspberry Pi Zero 2 W with Raspberry Pi OS and connect the radio using a USB data cable.",
+      "Install RemoteTerm using the upstream instructions, then configure the connected companion radio.",
+      "Open the browser interface on your trusted local network, configure the regional radio settings, and test channel or direct messages.",
+      "Add packet monitoring, bots, or MQTT integrations as needed. Follow the upstream access-control guidance before enabling remote access."
+    ],
+    "resources": [
+      {
+        "label": "Seeed Wiki setup guide",
+        "url": "https://wiki.seeedstudio.com/get_started_with_meshcore_remote_terminal/"
+      },
+      {
+        "label": "Upstream source & installation",
+        "url": "https://github.com/jkingsman/Remote-Terminal-for-MeshCore"
+      },
+      {
+        "label": "MeshCore Web Flasher",
+        "url": "https://meshcore.io/flasher"
+      }
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
+    "id": "t1000e-companion-repeat",
+    "title": "T1000-E · MeshCore Companion Relay",
+    "author": "Seeed Studio / Advent Jiang",
+    "description": "Use three T1000-E nodes to explore MeshCore contact sharing and temporary companion relaying. The guide compares message delivery with the middle node powered off and on; results depend on placement and radio conditions.",
+    "categories": [
+      "Others"
+    ],
+    "products": [
+      "T1000-E"
+    ],
+    "devices": [
+      "SenseCAP Card Tracker T1000-E × 3",
+      "Phone running the MeshCore App"
+    ],
+    "tags": [
+      "MeshCore",
+      "Companion Repeat",
+      "Contact sharing",
+      "Temporary relay",
+      "Application guide"
+    ],
+    "url": "https://wiki.seeedstudio.com/t1000e_meshcore_contact_sharing_companion_repeat/",
+    "image": "https://files.seeedstudio.com/wiki/SenseCAP/Meshcore/T1000-E/application/t1000e-meshcore-hero.png",
+    "imageAlt": "SenseCAP T1000-E devices used with the MeshCore App.",
+    "source": "https://wiki.seeedstudio.com/t1000e_meshcore_contact_sharing_companion_repeat/",
+    "setup": [
+      "Prepare three T1000-E devices with compatible MeshCore companion firmware and the MeshCore App. The guide uses firmware v1.17.1 and app v1.47.0.",
+      "Configure matching radio parameters supported by the firmware and permitted in your region.",
+      "Enable Repeat Mode only on the middle companion. Keep the two endpoint devices in normal companion mode.",
+      "Exchange contact identities with the middle node, then share the endpoint contact cards through the Public Channel.",
+      "Compare messages received at the destination with the middle node powered off and on. Contact sharing alone does not create radio coverage, and companion relaying is a temporary supplement to fixed repeaters."
+    ],
+    "resources": [
+      {
+        "label": "Seeed Wiki tutorial & test results",
+        "url": "https://wiki.seeedstudio.com/t1000e_meshcore_contact_sharing_companion_repeat/"
+      }
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
+    "id": "trail-mate-l2",
+    "title": "Trail Mate · Offline Navigation on L2 Pro",
+    "author": "vicliu624 / Trail Mate contributors",
+    "description": "Turn Wio Tracker L2 Pro into a touchscreen handheld for offline maps, GNSS navigation, and LoRa messaging over Meshtastic or MeshCore. Board-specific firmware and setup guides are available from the project.",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L2 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L2 Pro touchscreen model",
+      "microSD card for offline maps and stored data"
+    ],
+    "tags": [
+      "TrailMate",
+      "Trail Mate",
+      "MeshCore",
+      "Meshtastic",
+      "Offline maps",
+      "GNSS"
+    ],
+    "url": "https://github.com/vicliu624/trail-mate",
+    "image": "https://raw.githubusercontent.com/vicliu624/trail-mate/v1.0.1/docs/images/release-1.0.0/firmware-tracker-card-native.png",
+    "imageAlt": "Trail Mate tracker interface rendered with sample KML route and simulated GPS data; not a device photograph.",
+    "source": "https://github.com/vicliu624/trail-mate/blob/v1.0.1/README.md",
+    "setup": [
+      "Use the Wio Tracker L2 Pro touchscreen model and select the wio_tracker_l2 target in the project documentation.",
+      "Install the matching L2 firmware using the project browser installer or its board-specific release files.",
+      "Choose Meshtastic or MeshCore and configure your regional LoRa settings and contacts.",
+      "Prepare the offline map packages described in the navigation guide and copy them to the microSD card.",
+      "Open Tracker to use GNSS, offline maps, and route tools. Check the L2 target notes for supported peripherals and feature limits."
+    ],
+    "resources": [
+      {
+        "label": "Source code & device support",
+        "url": "https://github.com/vicliu624/trail-mate"
+      },
+      {
+        "label": "L2 firmware release v1.0.1",
+        "url": "https://github.com/vicliu624/trail-mate/releases/tag/v1.0.1"
+      },
+      {
+        "label": "Browser installer",
+        "url": "https://vicliu624.github.io/trail-mate/"
+      },
+      {
+        "label": "L2 target notes",
+        "url": "https://github.com/vicliu624/trail-mate/blob/v1.0.1/docs/targets/wio_tracker_l2.md"
+      },
+      {
+        "label": "Offline navigation guide",
+        "url": "https://github.com/vicliu624/trail-mate/wiki/24.-Offline-Navigation-and-Map-Controls"
+      }
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
+    "id": "zephcore",
+    "title": "ZephCore · MeshCore on Zephyr",
+    "author": "liquidraver / ZephCore contributors; logo by recrof",
+    "description": "Run MeshCore-compatible firmware built on Zephyr RTOS. Published builds cover Wio Tracker L1, T1000-E, and supported XIAO variants, with companion and repeater roles plus configurable power-saving features.",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L1 Pro",
+      "Wio Tracker L1/E-ink",
+      "T1000-E",
+      "XIAO ESP32S3 Kit",
+      "XIAO nRF52840 Kit"
+    ],
+    "devices": [
+      "Wio Tracker L1 (wio_tracker_l1)",
+      "Wio Tracker L1 1W (wio_tracker_l1_1w)",
+      "SenseCAP Card Tracker T1000-E",
+      "XIAO ESP32S3 with a compatible LoRa module",
+      "XIAO nRF52840 with a compatible LoRa module"
+    ],
+    "tags": [
+      "MeshCore",
+      "Zephyr RTOS",
+      "ZephCore",
+      "Companion",
+      "Repeater",
+      "Power saving"
+    ],
+    "url": "https://github.com/liquidraver/ZephCore",
+    "image": "https://raw.githubusercontent.com/liquidraver/ZephCore/master/img/kite-network-logo-thick-dark.svg",
+    "imageAlt": "ZephCore project logo by recrof.",
+    "source": "https://github.com/liquidraver/ZephCore/blob/master/docs/supported_boards.md",
+    "setup": [
+      "Check the supported-board list and select the exact hardware variant and companion or repeater role.",
+      "Back up your configuration before switching firmware. Settings do not carry over between stock MeshCore and ZephCore.",
+      "Use the ZephCore web flasher or download the matching published firmware. nRF52840 targets use UF2; ESP32 targets use their board-specific merged binary.",
+      "Configure regional radio settings, then pair a companion with the MeshCore app or configure a repeater through the documented CLI.",
+      "Follow the board-specific notes before enabling optional power-saving or peripheral features."
+    ],
+    "resources": [
+      {
+        "label": "Source code & getting started",
+        "url": "https://github.com/liquidraver/ZephCore"
+      },
+      {
+        "label": "Supported boards & limitations",
+        "url": "https://github.com/liquidraver/ZephCore/blob/master/docs/supported_boards.md"
+      },
+      {
+        "label": "Firmware release 1.18.0",
+        "url": "https://github.com/liquidraver/ZephCore/releases/tag/1.18.0-zephcore"
+      },
+      {
+        "label": "ZephCore Web Flasher",
+        "url": "https://zephcore.meshcore.dev"
+      }
+    ],
+    "addedAt": "2026-10-21",
+    "activity": null
+  },
+  {
     "id": "meshcore-open-images",
     "title": "MeshCore Open · Images over LoRa",
     "description": "Share AI-reconstructed images over a low-bandwidth MeshCore network. MeshCore Open encodes a small representation on the sender and reconstructs a similar image on the receiver. Reconstructed details may differ from the original.",
@@ -9,10 +223,16 @@
     ],
     "products": [
       "Wio Tracker L1 Pro",
-      "Wio Tracker L1/E-ink"
+      "Wio Tracker L1/E-ink",
+      "T1000-E",
+      "SenseCAP MeshTracker X1",
+      "Wio Tracker L2 Pro"
     ],
     "devices": [
       "Wio Tracker L1 series",
+      "SenseCAP Card Tracker T1000-E",
+      "SenseCAP MeshTracker X1",
+      "Wio Tracker L2 Pro",
       "Phone running MeshCore Open"
     ],
     "tags": [
@@ -35,8 +255,24 @@
     ],
     "resources": [
       {
-        "label": "Seeed Wiki tutorial",
+        "label": "Wio Tracker L1 tutorial",
         "url": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_l1/"
+      },
+      {
+        "label": "T1000-E tutorial",
+        "url": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_t1000e/"
+      },
+      {
+        "label": "MeshTracker X1 tutorial",
+        "url": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_x1/"
+      },
+      {
+        "label": "Wio Tracker L2 tutorial",
+        "url": "https://wiki.seeedstudio.com/meshcore_ai_image_transmission_l2/"
+      },
+      {
+        "label": "MeshCore Open source code",
+        "url": "https://github.com/zjs81/meshcore-open"
       },
       {
         "label": "MeshCore Open getting started",
