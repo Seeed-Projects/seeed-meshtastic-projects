@@ -1,4 +1,4 @@
-import { initHubMotion } from './hub-motion.js';
+import { initHubMotion } from './hub-motion.js?v=20261021-real-photos';
 import { matchesProject } from './search.js';
 import { mountProjectForm } from './project-form.js?v=20261015-email';
 import { CATEGORIES, PRODUCTS, ACTIVITIES, REPO_URL } from './config.js';

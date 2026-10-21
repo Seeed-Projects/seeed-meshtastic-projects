@@ -38,7 +38,6 @@ body > main, .site-footer { position: relative; z-index: 1; }
 .banner-group { display: grid; flex-shrink: 0; grid-template-columns: repeat(3, var(--demo-size)); gap: var(--demo-gap); padding-bottom: var(--demo-gap); }
 .demo-device { position: relative; width: var(--demo-size); }
 .banner-devices .demo-device img { display: block; position: static; width: 100%; height: auto; transform: none; margin: 0; filter: drop-shadow(0 20px 22px #0008); }
-.demo-device canvas { position: absolute; left: 18%; top: 56.5%; width: 71%; height: 35.4%; border-radius: 2px; }
 .campaign-banner.motion-idle .banner-track { animation-play-state: paused; }
 @keyframes demo-scroll { from { transform: translateY(calc(-100% / 3)); } to { transform: translateY(calc(-200% / 3)); } }
 .motion-control { position: absolute; right: 18px; bottom: 16px; z-index: 3; padding: 7px 12px; color: #e1edd5; font-size: 11px; background: #071613b3; border: 1px solid #cadfba4d; border-radius: 99px; }
