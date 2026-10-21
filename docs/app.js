@@ -177,7 +177,7 @@ window.addEventListener('scroll', () => {
 async function loadProjects() {
   $('load-error').hidden = true; $('result-count').textContent = 'Loading projects…';
   try {
-    const response = await fetch('./data/projects.json'); if (!response.ok) throw new Error('Catalog unavailable');
+    const response = await fetch('./data/projects.json', { cache: 'no-cache' }); if (!response.ok) throw new Error('Catalog unavailable');
     projects = await response.json(); if (!Array.isArray(projects)) throw new Error('Invalid catalog');
     render(); route(false);
     void (async () => { try { const r = await fetch('./data/engagement.json', { cache: 'no-cache' }); if (r.ok) { engagement = (await r.json()).projects || {}; render(); if (activeProject && $('detail').open) showDetail(activeProject); } } catch { /* The catalog works without engagement snapshots. */ } })();

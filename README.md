@@ -83,7 +83,7 @@ The product filter and submission form include SenseCAP MeshTracker X1. IOT repl
 | `activity` | Optional configured activity ID, otherwise `null` |
 | `issueNumber`, `socialLinks` | Optional approved submission and public social links |
 
-The 15 curated entries include all 10 enclosure projects from the supplied Wio Tracker L1 Wiki, EasySkyMesh, MeshCore Open image transmission, and the three existing AI projects. Summaries retain source attribution. Catalog dates denote this collection's import date. Images load from their original public sources and have a local fallback if unavailable.
+The 19 curated entries include all 10 enclosure projects from the supplied Wio Tracker L1 Wiki, EasySkyMesh, MeshCore Open image transmission, the three existing AI projects, RemoteTerm, T1000-E companion relaying, Trail Mate for L2 Pro, and ZephCore. MeshCore Open includes L1, T1000-E, X1, and L2 tutorials. ZephCore is limited to published L1, T1000-E, and supported XIAO builds; unverified X1 hardware, P1, and L2 are not listed. Trail Mate uses an upstream interface preview with its simulated-data origin described in the image text, and ZephCore uses the credited upstream logo. Curated entries are not automatically enrolled in the L2 rewards activity. Summaries retain source attribution. Catalog dates denote this collection's import date. Images load from their original public sources and have a local fallback if unavailable.
 
 ## L2 Pro activity
 
