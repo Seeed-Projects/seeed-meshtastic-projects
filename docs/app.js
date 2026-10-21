@@ -124,7 +124,7 @@ function closeDetailRoute() {
   activeProject = null;
   const url = new URL(location.href); url.searchParams.delete('project'); history.replaceState(null, '', url);
 }
-const sectionIds = ['home', 'projects', 'activities', 'submit', 'contact'];
+const sectionIds = ['home', 'projects', 'submit', 'activities', 'contact'];
 let projectFormPromise;
 async function loadSubmissionForm() {
   if (!projectFormPromise) projectFormPromise = mountProjectForm({activity: new URLSearchParams(location.search).get('activity') || ''});
