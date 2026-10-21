@@ -9,8 +9,8 @@ export const L2 = Object.freeze({
 });
 export const MILESTONES = Object.freeze([
   {id:'reddit', name:'Reddit', threshold:200, metric:'upvotes', hosts:['reddit.com','www.reddit.com'], detail:'on a single post'},
-  {id:'facebook', name:'Facebook', threshold:100, metric:'likes', hosts:['facebook.com','www.facebook.com','m.facebook.com'], detail:'on a single post'},
-  {id:'x', name:'X', threshold:30, metric:'likes', hosts:['x.com','www.x.com','twitter.com','www.twitter.com'], detail:'on a single post'},
+  {id:'facebook', name:'Facebook', threshold:100, metric:'likes', hosts:['facebook.com','www.facebook.com','m.facebook.com'], detail:'on a single post (excluding other reactions)'},
+  {id:'x', name:'X', threshold:100, metric:'likes', hosts:['x.com','www.x.com','twitter.com','www.twitter.com'], detail:'on a single post'},
   {id:'youtube', name:'YouTube', threshold:1000, metric:'organic views', hosts:['youtube.com','www.youtube.com','m.youtube.com','youtu.be'], detail:'on a standard video'},
   {id:'youtube-shorts', name:'YouTube Shorts', threshold:1000, metric:'organic views', hosts:['youtube.com','www.youtube.com','m.youtube.com'], detail:'on a single Short'},
 ]);

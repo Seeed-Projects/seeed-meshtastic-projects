@@ -97,6 +97,8 @@ Build Reward is a **Seeed Discount Coupon: $20 off orders of $100+**. Shipping d
 
 Share Reward is a **Seeed Merchandise Pack** for an approved project whose social post reaches an eligible platform’s milestone. Social sharing is optional. Each project may earn one coupon and one merchandise pack; reaching milestones on multiple platforms does not earn extra packs for the same project. Merchandise may include pins, Velcro patches, and mugs, with contents depending on availability. The site prepares submissions; AE handles review and reward fulfillment.
 
+Social milestones are 200 Reddit upvotes, 100 Facebook likes (excluding other reactions), 100 X likes, or 1,000 organic YouTube views on a standard video or Short. Each milestone applies to a single post or video.
+
 The hero and Start Building purchase buttons open the L2 product page configured by `purchaseUrl` in `docs/l2-config.js`. The activity Wiki and contact email are configured there. No deadline, coupon expiration, or dispatch time is specified.
 
 The Community Activities card uses the supplied Meshtastic device photo, `docs/assets/l2-screens/tile/10-meshtastic.webp`. The L2 hero also includes the supplied Gomoku, IMU bubbles, and MeshCore photos. These transparent photos are cropped and resized without changing their screens. Step images live in `docs/assets/l2-steps/`; the screen tiles in `docs/assets/l2-screens/tile/` are resized copies of the provided L2 screenshots. Both pages use the official Seeed Studio browser icon, saved as `docs/assets/seeed-favicon.ico` from `https://www.seeedstudio.com/_pub/images/favicon.ico`. Shared styles are in `docs/base.css`; the hub uses `docs/hub.css` and the activity page `docs/l2.css`.
