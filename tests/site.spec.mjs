@@ -82,18 +82,22 @@ test('desktop and mobile pages remain English and fit the viewport',async({page}
   expect(errors).toEqual([]);
 });
 
-test('Hub submission is a collapsed section between Community Activities and Contact Us', async ({page}) => {
+test('Hub submission expands from the single contribution callout in Project Hub', async ({page}) => {
   await page.goto('/');
   await expect(page.locator('.project-card')).toHaveCount(15);
   await expect(page.locator('#submit-dialog')).toHaveCount(0);
   await expect(page.locator('#main-nav a[href="#submit"]')).toHaveText('Submit a Project');
-  await expect(page.locator('section#submit > details#project-submission')).toHaveCount(1);
+  await expect(page.locator('#projects > section#submit > details#project-submission')).toHaveCount(1);
+  await expect(page.locator('.contribute-callout')).toHaveCount(1);
+  await expect(page.locator('#submit-title')).toHaveText('What will you build next?');
+  await expect(page.locator('.contribute-description')).toHaveText('Share your project and inspire the community.');
+  await expect(page.locator('#activities + #contact')).toHaveCount(1);
   await expect(page.locator('#project-submission')).not.toHaveAttribute('open');
   await expect(page.locator('#project-submission > summary')).toBeVisible();
   await expect(page.locator('#project-form')).toBeHidden();
   for (const id of ['home', 'projects', 'activities', 'submit', 'contact']) await expect(page.locator(`#${id}`)).toBeVisible();
   expect(await page.locator('main > section').evaluateAll(sections => sections.map(section => section.id)))
-    .toEqual(['home','projects','activities','submit','contact']);
+    .toEqual(['home','projects','activities','contact']);
   await expect(page.locator('h1')).toHaveCount(1);
   await expect(page.locator('.campaign-banner')).toHaveCount(1);
 });
@@ -114,11 +118,11 @@ test('Hub contribution buttons expand and scroll to the form, and collapsing kee
     })).toBe(true);
     await summary.click();await expect(disclosure).not.toHaveAttribute('open');
   }
-  await page.getByRole('button', {name:'Contribute a project',exact:true}).click();
+  await summary.locator('.submission-toggle').click();
   await page.locator('[name=title]').fill('Keep this inline draft');
   await summary.click();
   await expect(disclosure).not.toHaveAttribute('open');await expect(page.locator('#project-form')).toBeHidden();
-  await page.getByRole('button', {name:'Contribute a project',exact:true}).click();
+  await summary.locator('.submission-toggle').click();
   await expect(disclosure).toHaveAttribute('open','');
   await expect(page.locator('[name=title]')).toHaveValue('Keep this inline draft');
   await page.getByRole('button', {name:'Clear form',exact:true}).click();

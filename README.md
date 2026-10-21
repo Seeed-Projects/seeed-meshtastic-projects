@@ -14,7 +14,7 @@ Project and social submissions are opened in `Seeed-Projects/seeed-meshtastic-pr
 python3 -m http.server 8765 --bind 127.0.0.1 --directory docs
 ```
 
-Open http://127.0.0.1:8765/. Home, Projects, Community Activities, the submission form, and Contact Us are sections of one page. The submission form sits below Community Activities and starts collapsed. The Submit a Project navigation link and Contribute a project buttons expand and scroll to it; collapsing the form preserves the draft. Existing `#projects` links and `?project=ID#projects` project links remain valid, and `#submit` links expand the same form. Learn More links directly to Seeed’s Mesh product page.
+Open http://127.0.0.1:8765/. Home, Projects, Community Activities, and Contact Us are sections of one page. The “What will you build next?” callout below the Project Hub cards expands the inline submission form and starts collapsed. Click the callout again to collapse it while preserving the draft. The Submit a Project navigation link and the Project Hub contribution button expand and scroll to this same form. Existing `#projects` links and `?project=ID#projects` project links remain valid, and `#submit` links expand the form. Learn More links directly to Seeed’s Mesh product page.
 
 Social Media Links is a separate optional field directly below Resources & Links. It accepts public posts and demo videos for any project, whether or not an activity is selected. Approved links appear on the project's card; the separate L2 marketing export still includes only L2 activity submissions.
 

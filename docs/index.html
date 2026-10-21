@@ -8,9 +8,9 @@
   <title>LoRa Mesh Lab · Your next Mesh project starts here.</title>
   <link rel="icon" href="./assets/seeed-favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./base.css">
-  <link rel="stylesheet" href="./hub.css?v=20261015-waves">
+  <link rel="stylesheet" href="./hub.css?v=20261021-contribute">
   <link rel="stylesheet" href="./forms.css">
-  <script type="module" src="./app.js?v=20261020-submit-open"></script>
+  <script type="module" src="./app.js?v=20261021-contribute"></script>
   <script type="module" src="./featured-waves.js?v=20261015-home"></script>
 </head>
 <body>
@@ -73,9 +73,20 @@
       </div>
       <p id="result-count" class="result-count" role="status" aria-live="polite">Loading projects…</p>
       <div class="project-grid" id="project-grid" aria-label="Projects"></div>
-      <div class="contribute-callout"><div><h3>What will you build next?</h3><p>Share your project and inspire the community.</p></div><button class="button primary" type="button" data-open-project>Contribute a project <span aria-hidden="true">↗</span></button></div>
       <div class="empty-state" id="empty" hidden><h3>No projects found</h3><p>Try a different keyword, category, or device.</p><button class="button outline" id="reset" type="button">Clear filters</button></div>
       <div class="empty-state" id="load-error" hidden><h3>Projects are unavailable</h3><p>Please check your connection and try again.</p><button class="button outline" id="retry" type="button">Try again</button></div>
+      <section class="submission-section" id="submit" aria-labelledby="submit-title">
+        <details class="submission-panel" id="project-submission">
+          <summary>
+            <h3 class="contribute-callout">
+              <span><span id="submit-title">What will you build next?</span><span class="contribute-description">Share your project and inspire the community.</span></span>
+              <span class="button primary submission-toggle"><span class="when-closed">Contribute a project</span><span class="when-open">Collapse form</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span>
+            </h3>
+          </summary>
+          <p class="submission-intro">Sign in with GitHub to submit. Your project appears in the Project Hub after AE review.</p>
+          <div id="project-form-mount"><p>Loading the submission form…</p></div>
+        </details>
+      </section>
     </section>
 
     <section class="activities" id="activities" aria-labelledby="activities-title">
@@ -103,14 +114,6 @@
           <li><span class="past-year">2025</span><div><h4>Meshtastic Device Design Challenge</h4><p>Design low-power devices for long-range LoRa mesh networking.</p></div><a href="https://www.hackster.io/contests/SeeedMeshtasticDeviceDesign2025" target="_blank" rel="noopener noreferrer">View Activity <span aria-hidden="true">↗</span></a></li>
         </ul>
       </div>
-    </section>
-
-    <section class="shell hub-section submission-section" id="submit" aria-labelledby="submit-title">
-      <details class="submission-panel" id="project-submission">
-        <summary><h2 id="submit-title"><span>Submit a Project</span><span class="submission-toggle" aria-hidden="true"><span class="when-closed">Expand form</span><span class="when-open">Collapse form</span><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span></h2></summary>
-        <p class="submission-intro">Sign in with GitHub to submit. Your project appears in the Project Hub after AE review.</p>
-        <div id="project-form-mount"><p>Loading the submission form…</p></div>
-      </details>
     </section>
 
     <section class="shell hub-section" id="contact" aria-labelledby="contact-title">
