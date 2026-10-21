@@ -8,10 +8,10 @@ export const L2 = Object.freeze({
   imageSource: 'https://files.seeedstudio.com/wiki/SenseCAP/Wio_Tracker_L2/L2First.png',
 });
 export const MILESTONES = Object.freeze([
-  {id:'reddit', name:'Reddit', threshold:100, metric:'upvotes', hosts:['reddit.com','www.reddit.com'], detail:'on a single post'},
-  {id:'facebook', name:'Facebook', threshold:50, metric:'reactions', hosts:['facebook.com','www.facebook.com','m.facebook.com'], detail:'on a single post'},
+  {id:'reddit', name:'Reddit', threshold:200, metric:'upvotes', hosts:['reddit.com','www.reddit.com'], detail:'on a single post'},
+  {id:'facebook', name:'Facebook', threshold:100, metric:'likes', hosts:['facebook.com','www.facebook.com','m.facebook.com'], detail:'on a single post'},
   {id:'x', name:'X', threshold:30, metric:'likes', hosts:['x.com','www.x.com','twitter.com','www.twitter.com'], detail:'on a single post'},
-  {id:'youtube', name:'YouTube', threshold:500, metric:'organic views', hosts:['youtube.com','www.youtube.com','m.youtube.com','youtu.be'], detail:'on a standard video'},
+  {id:'youtube', name:'YouTube', threshold:1000, metric:'organic views', hosts:['youtube.com','www.youtube.com','m.youtube.com','youtu.be'], detail:'on a standard video'},
   {id:'youtube-shorts', name:'YouTube Shorts', threshold:1000, metric:'organic views', hosts:['youtube.com','www.youtube.com','m.youtube.com'], detail:'on a single Short'},
 ]);
 export function validPostUrl(value, platform) {

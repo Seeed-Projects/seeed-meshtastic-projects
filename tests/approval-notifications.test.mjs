@@ -187,6 +187,7 @@ test('L2 approved email includes optional social submission and current coupon t
   assert(!approvalMessage(base, 'https://example.com/').text.includes('#submit-social'));
   const message = approvalMessage({ ...base, activity: 'l2-pro' }, 'https://example.com/mesh-lab/');
   assert(message.text.includes('https://example.com/mesh-lab/l2.html#submit-social'));
+  assert(message.text.includes('$20 off eligible orders of $100 or more'));
   assert(message.text.includes('excluding shipping and XIAO development kits'));
   assert(message.text.includes('Social sharing is optional'));
   assert.throws(() => approvalMessage(base, 'javascript:alert(1)'), /INVALID_SITE_URL/);

@@ -56,7 +56,7 @@ export function approvalMessage(project, siteUrl) {
   const title = project.title.replace(/[\r\n\u0000-\u001f\u007f]/g, ' ').slice(0, 120);
   let text = `Your project “${title}” has been approved and is now featured in Mesh Lab.\n\nView your project: ${projectUrl}\n\nThank you for sharing your build with the community.`;
   if (project.activity === 'l2-pro') {
-    text += `\n\nYour approved, working L2 project qualifies for the Build Reward: a Seeed discount coupon for $15 off eligible orders of $50 or more, excluding shipping and XIAO development kits. The team will follow up with reward details.\n\nSocial sharing is optional. Didn’t include your social post link when submitting your project? Add it here: ${new URL('l2.html#submit-social', site).href}\n\nOnce your post reaches an eligible platform’s milestone, submit the link for Share Reward review. Each project can receive one merchandise pack.`;
+    text += `\n\nYour approved, working L2 project qualifies for the Build Reward: a Seeed discount coupon for $20 off eligible orders of $100 or more, excluding shipping and XIAO development kits. The team will follow up with reward details.\n\nSocial sharing is optional. Didn’t include your social post link when submitting your project? Add it here: ${new URL('l2.html#submit-social', site).href}\n\nOnce your post reaches an eligible platform’s milestone, submit the link for Share Reward review. Each project can receive one merchandise pack.`;
   }
   return { subject: 'Your Mesh Lab project has been approved', text };
 }
