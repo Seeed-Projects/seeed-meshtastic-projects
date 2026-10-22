@@ -25,7 +25,7 @@
       "Audio"
     ],
     "url": "https://github.com/cvhviz/CAIRN",
-    "image": "https://www.cvhvisuals.com/assets/img/cairn/cairn-device-1200.jpg",
+    "image": "https://seeed-projects.github.io/seeed-meshtastic-projects/assets/projects/cairn-device.jpg",
     "imageAlt": "CAIRN project image showing the chats interface on a Wio Tracker L2 Pro in its custom case, from CVH Visuals.",
     "source": "https://www.cvhvisuals.com/lab.html#cairn",
     "setup": [
