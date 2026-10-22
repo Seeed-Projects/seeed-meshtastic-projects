@@ -6,6 +6,8 @@ An English-language community project collection for Seeed Mesh hardware. The we
 
 **Development fork:** https://github.com/Yvesgoat/seeed-meshtastic-projects
 
+**维护与交接 SOP（中文）：** [同事接手、定期检查、投稿审核、内容更新、奖励跟进与发布排障](MAINTENANCE_SOP.zh-CN.md)
+
 Project and social submissions are opened in `Seeed-Projects/seeed-meshtastic-projects`. Earlier discussions remain in the original `hack-embed/seeed-meshtastic-projects` repository; their issue numbers are not reused here.
 
 ## Run locally
