@@ -1,10 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+const catalog = JSON.parse(readFileSync(new URL('../docs/data/projects.json', import.meta.url), 'utf8'));
+const firmware = catalog.filter(project => project.categories.includes('Firmware'));
+const l2Firmware = firmware.filter(project => project.products.includes('Wio Tracker L2 Pro'));
 test('catalog filtering, local hearts, sorting, deep links and history',async({page})=>{
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
-  await page.goto('/#projects'); await expect(page.locator('.project-card')).toHaveCount(19);
-  await page.getByRole('button',{name:'Firmware',exact:true}).click(); await expect(page.locator('.project-card')).toHaveCount(3);
-  await page.locator('[data-device="Wio Tracker L2 Pro"]').click(); await expect(page.locator('.project-card')).toHaveCount(1);
-  await expect(page.locator('.card-title')).toHaveText('Trail Mate · Offline Navigation on L2 Pro');
+  await page.goto('/#projects'); await expect(page.locator('.project-card')).toHaveCount(catalog.length);
+  await page.getByRole('button',{name:'Firmware',exact:true}).click(); await expect(page.locator('.project-card')).toHaveCount(firmware.length);
+  await page.locator('[data-device="Wio Tracker L2 Pro"]').click(); await expect(page.locator('.project-card')).toHaveCount(l2Firmware.length);
+  expect((await page.locator('.card-title').allTextContents()).sort()).toEqual(l2Firmware.map(project => project.title).sort());
   await page.locator('[data-device="Solar Node P1 series"]').click(); await expect(page.locator('#empty')).toBeVisible();
   await page.getByRole('button',{name:'Clear filters'}).click();
   await page.locator('#search').fill('skysense'); await expect(page.locator('.project-card')).toHaveCount(1);
@@ -59,14 +63,14 @@ test('failed catalog fetch can be retried and hostile descriptions remain plain 
   let fail=true;
   await page.route('**/data/projects.json',async route=>{if(fail) await route.fulfill({status:503,body:'unavailable'}); else { const response=await route.fetch(); const data=await response.json(); data[0].title='<img src=x onerror=alert(1)>'; await route.fulfill({json:data}); }});
   await page.goto('/#projects'); await expect(page.locator('#load-error')).toBeVisible(); fail=false; await page.locator('#retry').click();
-  await expect(page.locator('.project-card')).toHaveCount(19); await expect(page.locator('.card-title').first()).toHaveText('<img src=x onerror=alert(1)>'); await expect(page.locator('.card-title img')).toHaveCount(0);
+  await expect(page.locator('.project-card')).toHaveCount(catalog.length); await expect(page.locator('.card-title').first()).toHaveText('<img src=x onerror=alert(1)>'); await expect(page.locator('.card-title img')).toHaveCount(0);
 });
 test('desktop and mobile pages remain English and fit the viewport',async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
   for (const width of [1440,390]) {
     await page.setViewportSize({width,height:1050});
     for (const route of ['home','projects','activities','submit','contact']) {
-      await page.goto(`/#${route}`); if(route==='projects') await expect(page.locator('.project-card')).toHaveCount(19);
+      await page.goto(`/#${route}`); if(route==='projects') await expect(page.locator('.project-card')).toHaveCount(catalog.length);
       if(route==='submit') { await expect(page.locator('#project-submission')).toHaveAttribute('open',''); await expect(page.locator('#submit #project-form')).toBeVisible(); }
       const metrics=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth,text:document.body.innerText}));
       expect(metrics.scroll,`${route} at ${width}px`).toBeLessThanOrEqual(metrics.width); expect(metrics.text).not.toMatch(/[\u3400-\u9fff]/);
@@ -86,7 +90,7 @@ test('desktop and mobile pages remain English and fit the viewport',async({page}
 
 test('Hub submission expands from the single contribution callout in Project Hub', async ({page}) => {
   await page.goto('/');
-  await expect(page.locator('.project-card')).toHaveCount(19);
+  await expect(page.locator('.project-card')).toHaveCount(catalog.length);
   await expect(page.locator('#submit-dialog')).toHaveCount(0);
   await expect(page.locator('#main-nav a[href="#submit"]')).toHaveText('Submit a Project');
   await expect(page.locator('#projects > section#submit > details#project-submission')).toHaveCount(1);
@@ -150,7 +154,7 @@ test('submission deep links expand inline and preserve activity defaults across 
   await expect(page.locator('[name=hardware][value="Wio Tracker L2 Pro"]')).toBeChecked();
   await page.locator('[name=title]').fill('Keep this activity draft');
   await summary.press('Enter');await expect(disclosure).not.toHaveAttribute('open');
-  releaseCatalog();await expect(page.locator('.project-card')).toHaveCount(19);
+  releaseCatalog();await expect(page.locator('.project-card')).toHaveCount(catalog.length);
   await expect(disclosure).not.toHaveAttribute('open');
   await summary.press('Enter');await expect(disclosure).toHaveAttribute('open','');
   await expect(page.locator('[name=title]')).toHaveValue('Keep this activity draft');
