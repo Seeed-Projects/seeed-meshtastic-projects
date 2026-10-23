@@ -43,6 +43,18 @@ function stats(p) {
   const e = engagement[p.id] || {};
   return { hearts: (Number.isSafeInteger(e.hearts) ? e.hearts : 0) + Number(likes.has(p.id)), comments: Number.isSafeInteger(e.comments) ? e.comments : 0, issueNumber: Number.isSafeInteger(e.issueNumber) && e.issueNumber > 0 ? e.issueNumber : null, thread: Array.isArray(e.thread) ? e.thread.filter(c => c && typeof c.author === 'string' && typeof c.body === 'string') : [] };
 }
+function toggleLike(id) {
+  const p = projects.find(item => item.id === id); if (!p) return;
+  const restoreCardFocus = document.activeElement?.dataset.like === id;
+  likes.has(id) ? likes.delete(id) : likes.add(id);
+  persist('meshlab-likes', [...likes]);
+  render();
+  if (activeProject === id && $('detail').open) {
+    $('detail-like').setAttribute('aria-pressed', String(likes.has(id)));
+    $('detail-like').innerHTML = `${likes.has(id) ? '♥ Liked' : '♡ Like'} <span>${stats(p).hearts}</span>`;
+  }
+  if (restoreCardFocus) $('project-grid').querySelector(`[data-like="${CSS.escape(id)}"]`)?.focus({preventScroll: true});
+}
 function attachImageFallbacks(root) {
   root.querySelectorAll('img[data-cover]').forEach(img => {
     const replace = () => { const wrapper = document.createElement('div'); wrapper.innerHTML = fallback; img.replaceWith(wrapper.firstElementChild); };
@@ -78,7 +90,7 @@ function render() {
   $('sort').querySelectorAll('[data-sort]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sort === sort)));
   $('result-count').textContent = `${result.length} project${result.length === 1 ? '' : 's'} to explore`;
   $('empty').hidden = result.length > 0 || !$('load-error').hidden;
-  $('project-grid').innerHTML = result.map(p => `<article class="project-card"><div class="card-cover"><button type="button" class="cover-button" data-detail="${p.id}" tabindex="-1" aria-hidden="true">${safeUrl(p.image) ? `<img data-cover src="${escapeHtml(safeUrl(p.image))}" alt="" loading="lazy" decoding="async">` : fallback}</button><div class="cover-tags">${p.categories.map(c => `<span class="tag-category">${escapeHtml(c)}</span>`).join('')}${p.products.map(product => `<span>${escapeHtml(product)}</span>`).join('')}</div></div><div class="card-body"><h3><button class="card-title" data-detail="${p.id}" type="button">${escapeHtml(p.title)}</button></h3><p class="card-description">${escapeHtml(p.description)}</p>${projectLinks(p, true)}<div class="card-bottom"><span class="card-meta"><span class="hearts" aria-label="${stats(p).hearts} hearts">${likes.has(p.id) ? '♥' : '♡'} ${stats(p).hearts}</span><time datetime="${p.addedAt}">${dateLabel(p.addedAt)}</time></span><button class="view-project" type="button" data-detail="${p.id}">View Project ↗</button></div></div></article>`).join('');
+  $('project-grid').innerHTML = result.map(p => `<article class="project-card"><div class="card-cover"><button type="button" class="cover-button" data-detail="${p.id}" tabindex="-1" aria-hidden="true">${safeUrl(p.image) ? `<img data-cover src="${escapeHtml(safeUrl(p.image))}" alt="" loading="lazy" decoding="async">` : fallback}</button><div class="cover-tags">${p.categories.map(c => `<span class="tag-category">${escapeHtml(c)}</span>`).join('')}${p.products.map(product => `<span>${escapeHtml(product)}</span>`).join('')}</div></div><div class="card-body"><h3><button class="card-title" data-detail="${p.id}" type="button">${escapeHtml(p.title)}</button></h3><p class="card-description">${escapeHtml(p.description)}</p>${projectLinks(p, true)}<div class="card-bottom"><span class="card-meta"><button class="hearts" type="button" data-like="${p.id}" aria-pressed="${likes.has(p.id)}" aria-label="Like ${escapeHtml(p.title)}" title="${likes.has(p.id) ? 'Remove like' : 'Like this project'} (saved in this browser)"><span aria-hidden="true">${likes.has(p.id) ? '♥' : '♡'}</span> <span class="heart-count">${stats(p).hearts}</span></button><time datetime="${p.addedAt}">${dateLabel(p.addedAt)}</time></span><button class="view-project" type="button" data-detail="${p.id}">View Project ↗</button></div></div></article>`).join('');
   attachImageFallbacks($('project-grid'));
 }
 function socialLabel(url) {
@@ -204,15 +216,16 @@ $('devices').addEventListener('click', event => { const button = event.target.cl
 $('sort').addEventListener('click', event => { const button = event.target.closest('[data-sort]'); if (button) { sort = button.dataset.sort; render(); syncUrl(); } });
 $('tabs-next').addEventListener('click', () => $('categories').scrollBy({left: $('categories').clientWidth * 0.7, behavior: 'smooth'}));
 $('categories').addEventListener('click', event => { const button = event.target.closest('[data-category]'); if (button) { category = button.dataset.category; render(); syncUrl(); $('categories').querySelector(`[data-category="${CSS.escape(category)}"]`).focus({preventScroll:true}); } });
-$('project-grid').addEventListener('click', event => { const button = event.target.closest('[data-detail]'); if (button) openProject(button.dataset.detail); });
+$('project-grid').addEventListener('click', event => {
+  const likeButton = event.target.closest('[data-like]');
+  if (likeButton) { toggleLike(likeButton.dataset.like); return; }
+  const button = event.target.closest('[data-detail]');
+  if (button) openProject(button.dataset.detail);
+});
 $('detail-content').addEventListener('click', event => {
   if (!activeProject) return;
   const p = projects.find(item => item.id === activeProject);
-  if (event.target.closest('#detail-like')) {
-    likes.has(p.id) ? likes.delete(p.id) : likes.add(p.id); persist('meshlab-likes',[...likes]); render();
-    $('detail-like').setAttribute('aria-pressed',String(likes.has(p.id)));
-    $('detail-like').innerHTML = `${likes.has(p.id) ? '♥ Liked' : '♡ Like'} <span>${stats(p).hearts}</span>`;
-  }
+  if (event.target.closest('#detail-like')) toggleLike(p.id);
   if (event.target.closest('#detail-share')) shareProject(p);
 });
 function dismissDetail() { closeDetailRoute(); $('detail').close(); }
