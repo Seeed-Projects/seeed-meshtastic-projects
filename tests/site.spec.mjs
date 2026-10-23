@@ -3,6 +3,48 @@ import { readFileSync } from 'node:fs';
 const catalog = JSON.parse(readFileSync(new URL('../docs/data/projects.json', import.meta.url), 'utf8'));
 const firmware = catalog.filter(project => project.categories.includes('Firmware'));
 const l2Firmware = firmware.filter(project => project.products.includes('Wio Tracker L2 Pro'));
+test('card hearts toggle directly, keep keyboard focus after sorting, and sync with details', async ({page}) => {
+  // Make the ranking change deterministic even when the public snapshot changes.
+  await page.route('**/data/engagement.json', route => route.fulfill({json:{projects:{}}}));
+  await page.goto('/?sort=likes#projects');
+  const heart = page.locator('[data-like="skysense"]');
+  await expect(heart).toHaveAttribute('aria-pressed', 'false');
+  await expect(heart.locator('.heart-count')).toHaveText('0');
+  const gridUrl = page.url();
+  await heart.press('Enter');
+  await expect(heart).toHaveAttribute('aria-pressed', 'true');
+  await expect(heart.locator('.heart-count')).toHaveText('1');
+  await expect(heart).toBeFocused();
+  await expect(page.locator('.project-card').first()).toContainText('SkySense');
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(page).toHaveURL(gridUrl);
+  await page.reload();
+  await expect(heart).toHaveAttribute('aria-pressed', 'true');
+  await expect(heart.locator('.heart-count')).toHaveText('1');
+  await page.locator('.view-project[data-detail="skysense"]').click();
+  await expect(page.locator('#detail-like')).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('#detail-like span')).toHaveText('1');
+  await page.locator('#detail-like').click();
+  await expect(page.locator('#detail-like')).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.locator('#detail-like span')).toHaveText('0');
+  await expect(page.locator('#detail-like')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(heart).toHaveAttribute('aria-pressed', 'false');
+  await expect(heart.locator('.heart-count')).toHaveText('0');
+  await page.locator('#search').fill('skysense');
+  const filteredUrl = page.url();
+  // Click the nested icon, as a visitor tapping the heart would.
+  await heart.locator('[aria-hidden]').click();
+  await expect(heart).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.locator('.project-card')).toHaveCount(1);
+  await expect(page).toHaveURL(filteredUrl);
+  await heart.press('Space');
+  await expect(heart).toHaveAttribute('aria-pressed', 'false');
+  await expect(heart).toBeFocused();
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await page.reload();
+  await expect(heart).toHaveAttribute('aria-pressed', 'false');
+});
 test('catalog filtering, local hearts, sorting, deep links and history',async({page})=>{
   const errors=[]; page.on('pageerror',e=>errors.push(e.message));
   await page.goto('/#projects'); await expect(page.locator('.project-card')).toHaveCount(catalog.length);

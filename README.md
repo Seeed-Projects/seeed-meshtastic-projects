@@ -58,7 +58,7 @@ The product filter and submission form include SenseCAP MeshTracker X1. IOT repl
 
 ## Likes, comments, and shares
 
-- The card's Like button toggles a heart stored in the current browser (`meshlab-likes`). It is not an authenticated global vote. The UI explicitly explains the scope.
+- The card's Like button works directly in the project grid without opening the detail dialog, and stays in sync with the detail Like button. It toggles a heart stored in the current browser (`meshlab-likes`). It is not an authenticated global vote. The UI explicitly explains the scope.
 - Public hearts and comment counts come from a linked GitHub issue. The display combines public GitHub hearts with the current browser's heart; a user who also reacts on GitHub can contribute to both. Most Liked sorts by this displayed total.
 - An approved community submission automatically uses its submission issue for comments and public GitHub heart reactions.
 - For imported projects without an issue, Comments opens a prefilled GitHub discussion issue containing `<!-- mesh-lab-project: PROJECT_ID -->`. A maintainer links it by adding `project-discussion`. Reuse the linked issue for subsequent discussion. No public discussions or comments were fabricated during catalog import.
