@@ -12,8 +12,8 @@ test('L2 project modal preserves drafts and clears back to activity defaults',as
  await page.goto('/l2.html');
  await expect(page.locator('#project-submission')).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Build with Wio Tracker L2 Pro'})).toBeVisible();
- await expect(page.getByRole('link',{name:'Get Your L2 Pro',exact:true})).toHaveAttribute('href','https://www.seeedstudio.com/Wio-Tracker-L2-Pro-for-Meshtastic-p-0000.html');
- await expect(page.getByRole('link',{name:'Get your L2',exact:true})).toHaveAttribute('href','https://www.seeedstudio.com/Wio-Tracker-L2-Pro-for-Meshtastic-p-0000.html');
+ await expect(page.getByRole('link',{name:'Get Your L2 Pro',exact:true})).toHaveAttribute('href','https://www.seeedstudio.com/Wio-Tracker-L2-Pro-for-Meshtastic-p-0000.html?utm_source=lab&utm_medium=activity&utm_campaign=L2');
+ await expect(page.getByRole('link',{name:'Get your L2',exact:true})).toHaveAttribute('href','https://www.seeedstudio.com/Wio-Tracker-L2-Pro-for-Meshtastic-p-0000.html?utm_source=lab&utm_medium=activity&utm_campaign=L2');
  await expect(page.locator('[data-purchase-note]:visible')).toHaveCount(0);
  await page.locator('[data-open-project]').first().click();await expect(page.locator('#l2-submit-dialog')).toBeVisible();
  await expect(page.locator('#project-form [name=email]')).not.toHaveAttribute('required');

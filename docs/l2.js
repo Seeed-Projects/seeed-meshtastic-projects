@@ -1,5 +1,5 @@
 import { mountProjectForm } from './project-form.js?v=20261015-email';
-import { L2, MILESTONES, validPostUrl } from './l2-config.js?v=20261021-rewards';
+import { L2, MILESTONES, validPostUrl } from './l2-config.js?v=20261103-purchase';
 import { issueDraft, approvedL2Projects } from './form-utils.js';
 import { REPO_URL } from './config.js';
 import { encryptApprovalContact, approvalContactAvailable } from './notification-contact.js';
