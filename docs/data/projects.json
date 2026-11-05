@@ -1,5 +1,37 @@
 [
   {
+    "id": "community-14",
+    "title": "Wio Tracker L2 Pro — On-device Speech-to-Text for Meshtastic",
+    "author": "zxw19",
+    "description": "On-device English speech-to-text (NeMo Conformer-CTC, int8) running on ESP32-S3 Meshtastic firmware - Seeed Wio Tracker L2 Pro",
+    "image": "https://opengraph.githubassets.com/1/zxw19/wio-tracker-l2-meshtastic-stt",
+    "imageAlt": "",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L2 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L2 Pro"
+    ],
+    "tags": [
+      "Community build"
+    ],
+    "addedAt": "2026-11-05",
+    "url": "https://github.com/zxw19/wio-tracker-l2-meshtastic-stt",
+    "setup": [],
+    "resources": [
+      {
+        "label": "Project resources",
+        "url": "https://github.com/zxw19/wio-tracker-l2-meshtastic-stt"
+      }
+    ],
+    "activity": "l2-pro",
+    "socialLinks": [],
+    "issueNumber": 14
+  },
+  {
     "id": "cairn",
     "title": "Cairn · Touchscreen MeshCore Firmware",
     "author": "cvhviz / CVH Visuals",
