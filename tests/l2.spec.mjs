@@ -16,7 +16,8 @@ test('L2 project modal preserves drafts and clears back to activity defaults',as
  await expect(page.getByRole('link',{name:'Get your L2',exact:true})).toHaveAttribute('href','https://www.seeedstudio.com/Wio-Tracker-L2-Pro-for-Meshtastic-p-0000.html?utm_source=lab&utm_medium=activity&utm_campaign=L2');
  await expect(page.locator('[data-purchase-note]:visible')).toHaveCount(0);
  await page.locator('[data-open-project]').first().click();await expect(page.locator('#l2-submit-dialog')).toBeVisible();
- await expect(page.locator('#project-form [name=email]')).not.toHaveAttribute('required');
+ await expect(page.locator('#project-form [name=email]')).toHaveAttribute('required','');
+ await expect(page.locator('#project-email-help')).toContainText('We will not make your email address public.');
  await expect(page.locator('[name=hardware][value="Wio Tracker L2 Pro"]')).toBeChecked();
  await expect(page.locator('#related-activity')).toHaveValue('l2-pro');await expect(page.locator('#social-field')).toBeVisible();
  await page.locator('[name=title]').fill('Keep my draft');await page.keyboard.press('Escape');
@@ -37,20 +38,26 @@ test('L2 project modal preserves drafts and clears back to activity defaults',as
 test('local photo selection includes a caption and an explicit GitHub attachment step',async({page})=>{
  await page.goto('/l2.html');await page.locator('[data-open-project]').first().click();
  await page.locator('[name=title]').fill('Photo upload test');await page.locator('[name=author]').fill('A Maker');
- await page.locator('[name=description]').fill('A working L2 project shown with an original photo for the community.');
+ await page.locator('#project-form [name=description]').fill('A working L2 project shown with an original photo for the community.');
  await page.getByRole('radio',{name:'Upload a photo',exact:true}).check();
  await expect(page.locator('#cover-url-field')).toBeHidden();await expect(page.locator('[name=image]')).toBeDisabled();
  await page.locator('#project-photo').setInputFiles(fileURLToPath(new URL('../docs/assets/l2-pro.webp',import.meta.url)));
  await expect(page.locator('#photo-preview')).toBeVisible();await expect(page.locator('#photo-status')).toContainText('Attach it on GitHub');
  await page.locator('[name="image-description"]').fill('My working L2 Pro with its screen switched on.');
  await page.locator('[name=categories][value="Hardware"]').check();
- await page.locator('[name=resources]').fill('https://example.com/project');await page.locator('[name=consent]').check();
+ await page.locator('[name=resources]').fill('https://example.com/project');await page.locator('#project-form [name=consent]').check();
+ await page.locator('#prepare-project').click();await expect(page.locator('#submission-ready')).toBeHidden();
+ expect(await page.locator('#project-form [name=email]').evaluate(el=>el.validity.valueMissing)).toBe(true);
+ await page.locator('#project-form [name=email]').fill('private@example.com');
  await page.locator('#prepare-project').click();await expect(page.locator('#submission-ready')).toBeVisible();
+ await expect(page.locator('#submission-help')).toContainText('Filling in this form alone does not send your email.');
  await expect(page.locator('#photo-handoff')).toContainText('still needs to be uploaded');
  await expect(page.getByRole('button',{name:'Copy photo',exact:true})).toBeVisible();
  const draft=new URL(await page.locator('#github-submit').getAttribute('href')), body=draft.searchParams.get('body');
  expect(body).toContain('[ATTACH YOUR PHOTO HERE');expect(body).toContain('### Cover Image Description\n\nMy working L2 Pro with its screen switched on.');
  expect(body).not.toContain('blob:');expect(body).not.toContain('data:image');
+ expect(decodeURIComponent(draft.href)).not.toContain('private@example.com');
+ expect(await page.locator('#private-email').getAttribute('href')).toContain('private%40example.com');
  await page.getByRole('button',{name:'Clear form',exact:true}).click();
  await expect(page.locator('#photo-preview')).toBeHidden();await expect(page.locator('#submission-ready')).toBeHidden();
  await expect(page.locator('#project-photo')).toHaveValue('');await expect(page.locator('[name="image-description"]')).toHaveValue('');
@@ -65,6 +72,8 @@ test('social form selects approved projects, requires private email, and removes
  await expect(page.locator('#share-project option[value="42"]')).toHaveText('L2 pocket game — A Maker (#42)');
  await expect(page.locator('#share-form [name=count]')).toHaveCount(0);await expect(page.locator('#share-threshold')).toHaveCount(0);
  await expect(page.locator('#share-form [name=email]')).toHaveAttribute('required','');
+ await expect(page.locator('#share-email-help')).toContainText('follow up on your submission and arrange prize delivery');
+ await expect(page.locator('#share-email-help')).toContainText('We will not make your email address public.');
  await page.locator('#share-project').selectOption('42');await page.locator('#share-platform').selectOption('x');
  await page.locator('#share-form [name=post]').fill('https://x.com/maker/status/123456');
  await page.locator('#share-form [name=consent]').check();await page.locator('#prepare-share').click();

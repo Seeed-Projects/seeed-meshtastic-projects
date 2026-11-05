@@ -21,9 +21,8 @@ export async function mountProjectForm({activity = ''} = {}) {
   $('hardware-options').innerHTML=checkboxes(PRODUCTS,'hardware');
   $('category-options').innerHTML=checkboxes(CATEGORIES,'categories');
   $('related-activity').innerHTML+=ACTIVITIES.map(a=>`<option value="${a.id}">${escapeHtml(a.title)}</option>`).join('');
-  $('project-email-help').textContent=contactAvailable
-    ? 'Receive an email when your project is approved. Your address is encrypted for the Seeed team and never displayed publicly.'
-    : 'Your address stays out of the public submission. In the next step, send it privately with your GitHub issue link so the team can follow up.';
+  $('project-email-help').textContent='Email is required so we can follow up on your submission and arrange prize delivery if you qualify. We will not make your email address public.'+
+    (contactAvailable ? '' : ' After creating your GitHub submission, send your email privately using the contact link in the next step.');
   function updateActivity() {
     const isL2=$('related-activity').value==='l2-pro';
     $('activity-context').hidden=!isL2;
@@ -126,19 +125,22 @@ export async function mountProjectForm({activity = ''} = {}) {
     };
     if(!values['Project Title'] || !values['Author / Maker'] || values['Project Description'].length<30)return formError('Add a project title, maker, and a description of at least 30 characters.');
     if(Object.values(values).some(v=>/^### /m.test(v)))return formError('Use plain text or headings with two # characters in your submission. Three-# headings are reserved for form fields.');
-    const email=String(form.get('email')).trim(), request=++submissionRequest;
+    const email=String(form.get('email') || '').trim();
+    if(!email)return formError('Add your email so we can follow up on your submission and arrange prize delivery if you qualify. We will not make your email address public.');
+    const request=++submissionRequest;
     $('prepare-project').disabled=true;
     try {
-      if(email && contactAvailable)values['Private Approval Contact']=await encryptApprovalContact(email,{title:values['Project Title'],author:values['Author / Maker']});
+      if(contactAvailable)values['Private Approval Contact']=await encryptApprovalContact(email,{title:values['Project Title'],author:values['Author / Maker']});
       if(request!==submissionRequest)return;
       const draft=issueDraft(`[Project] ${values['Project Title']}`,values);submissionBody=draft.body;
       $('github-submit').href=draft.url;
       $('submission-help').textContent=draft.needsCopy
         ? 'This submission is too long to prefill safely. Copy the submission, open GitHub, and paste it into the issue body before selecting Create.'
         : 'Sign in to GitHub, review the details, then select Create. Your project goes live only after AE approval.';
+      if(!contactAvailable)$('submission-help').textContent+=' Then use “Send required contact email privately” below to send us your email and the new GitHub issue URL. Filling in this form alone does not send your email. Do not put your email in the public issue.';
       $('photo-handoff').hidden=!upload;$('photo-copy-status').textContent='';
       $('photo-handoff-help').textContent=upload ? `Your photo “${selectedPhoto.name}” still needs to be uploaded. ${draft.needsCopy?'Paste the copied submission on GitHub first. ':''}Copy the photo below, open the GitHub submission, and replace the line under “Project Cover Image” by pasting the photo. Wait for the upload to finish before selecting Create. You can also drag the original file into that field.` : '';
-      $('private-email').hidden=!email || contactAvailable;
+      $('private-email').hidden=contactAvailable;
       if(!$('private-email').hidden)$('private-email').href=`mailto:sensecap@seeed.cc?subject=${encodeURIComponent(`Mesh Lab contact: ${values['Project Title']}`)}&body=${encodeURIComponent(`Project: ${values['Project Title']}\nGitHub submission URL: [paste your issue URL here]\nContact email: ${email}\nRelated activity: ${values['Related Activity']}\n\nPlease use this address for approval updates and community activity reward follow-up.`)}`;
       $('submission-ready').hidden=false;$('form-error').hidden=true;
       $('submission-ready').scrollIntoView({block:'center',behavior:'smooth'});$('github-submit').focus({preventScroll:true});

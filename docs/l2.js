@@ -1,4 +1,4 @@
-import { mountProjectForm } from './project-form.js?v=20261015-email';
+import { mountProjectForm } from './project-form.js?v=20261105-required-email';
 import { L2, MILESTONES, validPostUrl } from './l2-config.js?v=20261103-purchase';
 import { issueDraft, approvedL2Projects } from './form-utils.js';
 import { REPO_URL } from './config.js';
@@ -28,9 +28,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape' && $('l2-nav').class
 for(const m of MILESTONES){const option=document.createElement('option');option.value=m.id;option.textContent=m.name;$('share-platform').append(option);}
 let shareProjects=[], shareSubmissionRequest=0, shareSubmissionBody='';
 const contactAvailable=approvalContactAvailable();
-$('share-email-help').textContent=contactAvailable
-  ? 'Your email is required for reward follow-up. It is encrypted for the Seeed team and never displayed publicly.'
-  : 'Your email is required for reward follow-up and stays out of the public issue. Send it privately using the contact link in the next step.';
+$('share-email-help').textContent='Email is required so we can follow up on your submission and arrange prize delivery if you qualify. We will not make your email address public.'+
+  (contactAvailable ? '' : ' After creating your GitHub submission, send your email privately using the contact link in the next step.');
 function resetShareDraft() {
   ++shareSubmissionRequest;shareSubmissionBody='';$('share-ready').hidden=true;$('share-error').hidden=true;
   $('share-github').removeAttribute('href');$('share-private-email').removeAttribute('href');
@@ -70,7 +69,7 @@ $('share-form').addEventListener('submit',async event=>{
     $('share-github').href=draft.url;$('share-ready').hidden=false;$('share-error').hidden=true;
     const contactHelp=contactAvailable
       ? 'Sign in with the same GitHub account used for your project, review the details, and create the submission. Your encrypted contact email is included for the Seeed team.'
-      : 'Sign in with the same GitHub account used for your project, review the details, and create the submission. Then send your required contact email privately using the link below; add the new issue URL to your message.';
+      : 'Sign in with the same GitHub account used for your project, review the details, and create the submission. Then send your required contact email privately using the link below; add the new issue URL to your message. Filling in this form alone does not send your email. Do not put your email in the public issue.';
     $('share-ready-help').textContent=(draft.needsCopy ? 'This submission is too long to prefill safely. Copy the submission below, open GitHub, and paste it into the issue body. ' : '')+contactHelp;
     $('share-private-email').hidden=contactAvailable;
     if(!contactAvailable)$('share-private-email').href=`mailto:${L2.contact}?subject=${encodeURIComponent('L2 Pro Share Reward contact')}&body=${encodeURIComponent(`Approved project: ${projectUrl}\nShare submission URL: [paste your new issue URL here]\nPublic post: ${form.get('post')}\nReward contact email: ${email}\n\nPlease use this address only for activity reward follow-up.`)}`;
