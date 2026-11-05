@@ -1,6 +1,6 @@
 import { initHubMotion } from './hub-motion.js?v=20261021-real-photos';
 import { matchesProject } from './search.js';
-import { mountProjectForm } from './project-form.js?v=20261015-email';
+import { mountProjectForm } from './project-form.js?v=20261105-required-email';
 import { CATEGORIES, PRODUCTS, ACTIVITIES, REPO_URL } from './config.js';
 const $ = (id) => document.getElementById(id);
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

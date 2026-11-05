@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="./base.css">
   <link rel="stylesheet" href="./l2.css?v=20261014-wall">
   <link rel="stylesheet" href="./forms.css">
-  <script type="module" src="./l2.js?v=20261103-purchase"></script>
+  <script type="module" src="./l2.js?v=20261105-required-email"></script>
 </head>
 <body class="l2-page">
   <canvas id="mesh-background" aria-hidden="true"></canvas>
@@ -168,7 +168,7 @@
       <div id="share-project-status" class="share-project-status" role="status"><p class="form-footnote">Loading approved projects…</p></div>
       <label>Platform <span class="required">*</span><select id="share-platform" name="platform" required><option value="">Select a platform</option></select></label>
       <label>Public Post or Video Link <span class="required">*</span><input name="post" type="url" required maxlength="1500" placeholder="https://…"><small>Link directly to the qualifying post or video. The team will review its metrics.</small></label>
-      <label>Email <span class="required">*</span><input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"><small id="share-email-help">Your email is kept out of the public submission and used for reward follow-up.</small></label>
+      <label>Email <span class="required">*</span><input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com" aria-describedby="share-email-help"><small id="share-email-help">Email is required so we can follow up on your submission and arrange prize delivery if you qualify. We will not make your email address public.</small></label>
       <label class="consent"><input type="checkbox" name="consent" required><span>This is my approved project and public post. The metrics are genuine and, for YouTube, represent organic views.</span></label>
       <p id="share-error" class="form-error" role="alert" hidden></p>
       <button id="prepare-share" class="button primary" type="submit" disabled>Continue with GitHub ↗</button><p class="form-footnote">You’ll review your public post link on GitHub before sending it to the team.</p>
