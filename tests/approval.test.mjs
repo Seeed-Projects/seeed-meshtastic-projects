@@ -13,7 +13,10 @@ async function runApproval({permission='write',reviewers='',approved=true,eventN
  const dir=await mkdtemp(join(tmpdir(),'mesh-lab-review-'));
  try {
   for(const path of ['scripts','docs/data']) await mkdir(join(dir,path),{recursive:true});
-  for(const file of ['scripts/update-catalog.mjs','scripts/catalog.mjs','docs/config.js','docs/data/projects.json','docs/data/engagement.json']) await copyFile(new URL(`../${file}`,import.meta.url),join(dir,file));
+  for(const file of ['scripts/update-catalog.mjs','scripts/catalog.mjs','docs/config.js']) await copyFile(new URL(`../${file}`,import.meta.url),join(dir,file));
+  // Real community submissions must not add requests to this isolated API fixture.
+  await writeFile(join(dir,'docs/data/projects.json'),'[]');
+  await writeFile(join(dir,'docs/data/engagement.json'),JSON.stringify({projects:{}}));
   await writeFile(join(dir,'package.json'),' {"type":"module"}');
   const issue=structuredClone(fixture); if(!approved) issue.labels=[];
   issue.body=issue.body.replace('No related activity',activity);
