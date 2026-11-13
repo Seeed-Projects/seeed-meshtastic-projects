@@ -1,5 +1,51 @@
 [
   {
+    "id": "community-18",
+    "title": "WioCraft",
+    "author": "zxw19",
+    "description": "A small standalone voxel survival game for the Seeed Wio Tracker L2 Pro (ESP32-S3R8): 160x120 internal rendering scaled 2x to the 320x240 display, with touch controls for moving, looking, digging, placing blocks, jumping, and crafting. SD card saving is implemented, but saving and restoring with a real card has not yet been verified in v0.3.",
+    "image": "https://seeed-projects.github.io/seeed-meshtastic-projects/assets/projects/wiocraft-l2.jpg",
+    "imageAlt": "WioCraft running on a Wio Tracker L2 Pro, showing its voxel world, touch controls, crafting button, and inventory bar. Photo provided for this project review.",
+    "categories": [
+      "Firmware",
+      "Others"
+    ],
+    "products": [
+      "Wio Tracker L2 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L2 Pro"
+    ],
+    "tags": [
+      "Community build"
+    ],
+    "addedAt": "2026-11-13",
+    "url": "https://github.com/zxw19/WioCraft-L2/releases/tag/v0.3-baseline",
+    "setup": [
+      "Download WioCraft-L2-v0.3-merged.bin and SHA256SUMS.txt from the v0.3-baseline release and verify the firmware checksum.",
+      "Connect the Wio Tracker L2 Pro with a USB data cable and follow the repository installation instructions to flash the merged image at offset 0x0 with esptool. Replace the example COM83 port with the actual port on your computer. This installs the standalone game firmware.",
+      "Use the bottom-left stick to move, drag to look, DIG to mine, PLACE to place blocks, JUMP to jump, CRAFT to craft, and the hotbar to choose an item. Tap ? for help.",
+      "A FAT32 microSD card is used for saves. The author has not yet verified saving, reboot-and-restore, or power-loss behavior with a real card in v0.3."
+    ],
+    "resources": [
+      {
+        "label": "Project resources",
+        "url": "https://github.com/zxw19/WioCraft-L2/releases/tag/v0.3-baseline"
+      },
+      {
+        "label": "Resource 2",
+        "url": "https://github.com/zxw19/WioCraft-L2"
+      },
+      {
+        "label": "Resource 3",
+        "url": "https://github.com/zxw19/WioCraft-L2/blob/main/README.md"
+      }
+    ],
+    "activity": "l2-pro",
+    "socialLinks": [],
+    "issueNumber": 18
+  },
+  {
     "id": "meshcore-solo",
     "title": "MeshCore Solo · Standalone Messaging & Navigation",
     "author": "MarekZegare4 / MeshCore Solo contributors",
