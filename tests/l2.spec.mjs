@@ -1,4 +1,5 @@
 import { test,expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 const approvedProject={id:'community-42',title:'L2 pocket game',author:'A Maker',categories:['APP'],products:['Wio Tracker L2 Pro'],image:'https://example.com/l2-cover.png',imageAlt:'A game running on the L2 screen.',activity:'l2-pro',addedAt:'2026-10-14',issueNumber:42};
 const mockApproved=page=>page.route('**/data/projects.json',route=>route.fulfill({json:[
@@ -141,18 +142,37 @@ test('Hub activity link expands the inline submission and repository import keep
  await expect(page.locator('[name=image]')).toHaveValue('https://example.com/photo.jpg');await expect(page.locator('textarea[name=setup]')).toHaveValue('Flash the firmware.\nPair the Wio Tracker L2 Pro.');await expect(page.locator('[name=author]')).toHaveValue('example');
 });
 
-test('idea cards show published L2 Pro projects independently of reward activity enrollment',async({page})=>{
- await page.route('**/data/projects.json',route=>route.fulfill({json:[
-  {...approvedProject,id:'case-a',title:'L2 Case',categories:['3D Prints & Enclosures'],image:'https://example.com/a.png',imageAlt:'An L2 case on a workbench.',activity:null,issueNumber:undefined,addedAt:'2026-01-01'},
-  {id:'case-b',title:'Newer L1 Case',categories:['3D Prints & Enclosures','Firmware'],products:['Wio Tracker L1 Pro'],image:'https://example.com/b.png',activity:'l2-pro',addedAt:'2026-06-01'},
-  {id:'unsafe',title:'Unsafe',categories:['APP'],products:['Wio Tracker L2 Pro'],image:'javascript:alert(1)',activity:null,addedAt:'2026-07-01'},
- ]}));
+const liveCatalog=JSON.parse(readFileSync(new URL('../docs/data/projects.json',import.meta.url),'utf8'));
+const newSubmission={...approvedProject,title:'Newest approved build',addedAt:'2099-01-01',categories:['3D Prints & Enclosures','Firmware','Hardware','APP','IOT','Intelligent System','Others']};
+test('new submissions do not replace fixed activity examples or community previews',async({page})=>{
+ let catalog=liveCatalog;
+ await page.route('**/data/projects.json',route=>route.fulfill({json:catalog}));
  await page.goto('/l2.html#ideas');
  const card=name=>page.locator(`[data-idea="${name}"] .idea-example`);
- await expect(card('3D Prints & Enclosures')).toContainText('L2 Case');await expect(card('3D Prints & Enclosures')).toHaveAttribute('href','./?project=case-a#projects');
- await expect(card('3D Prints & Enclosures').locator('img')).toHaveAttribute('alt','An L2 case on a workbench.');
- await expect(card('Firmware')).toContainText('first example');await expect(page.locator('.idea-example',{hasText:'L1 Case'})).toHaveCount(0);
- await expect(card('APP')).toContainText('first example');await expect(page.locator('[data-idea="APP"] img')).toHaveCount(0);
- await card('Others').click();await expect(page.locator('#l2-submit-dialog')).toBeVisible();
+ const assertShowcase=async()=>{
+  await expect(card('Firmware')).toHaveAttribute('href','./?project=cairn#projects');
+  await expect(card('Firmware')).toContainText('Cairn');
+  await expect(card('Firmware').locator('img')).toHaveAttribute('alt',liveCatalog.find(p=>p.id==='cairn').imageAlt);
+  await expect(card('Others')).toHaveAttribute('href','./?project=community-18#projects');
+  for(const category of ['APP','Intelligent System'])await expect(card(category)).toHaveAttribute('href','./?project=meshcore-open-images#projects');
+  for(const category of ['3D Prints & Enclosures','Hardware','IOT'])await expect(card(category)).toContainText('first example');
+  await expect(page.locator('#community-demos img')).toHaveCount(3);
+  for(const [index,id] of ['community-18','meshcore-solo','community-14'].entries())await expect(page.locator('#community-demos img').nth(index)).toHaveAttribute('src',liveCatalog.find(p=>p.id===id).image);
+ };
+ await assertShowcase();
+ catalog=[newSubmission,...liveCatalog.toReversed()];
+ await page.reload();
+ await assertShowcase();
+ await expect(page.locator('#share-project option[value="42"]')).toHaveText('Newest approved build — A Maker (#42)');
+ await expect(page.locator('.idea-example',{hasText:'Newest approved build'})).toHaveCount(0);
+});
+test('missing or invalid fixed selections keep invitations instead of choosing another project',async({page})=>{
+ const catalog=liveCatalog.filter(p=>p.id!=='community-18').map(p=>p.id==='cairn' ? {...p,products:['Wio Tracker L1 Pro']} : p.id==='meshcore-open-images' ? {...p,image:'javascript:alert(1)'} : p);
+ await page.route('**/data/projects.json',route=>route.fulfill({json:[newSubmission,...catalog]}));
+ await page.goto('/l2.html#ideas');
+ await expect(page.locator('.idea-example')).toHaveCount(7);
+ await expect(page.locator('.idea-example img')).toHaveCount(0);
  await expect(page.locator('#community-demos img')).toHaveCount(2);
+ await page.locator('[data-idea="Firmware"] .idea-example').click();
+ await expect(page.locator('#l2-submit-dialog')).toBeVisible();
 });

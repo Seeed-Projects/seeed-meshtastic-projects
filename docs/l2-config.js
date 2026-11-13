@@ -7,6 +7,20 @@ export const L2 = Object.freeze({
   contact: 'sensecap@seeed.cc',
   imageSource: 'https://files.seeedstudio.com/wiki/SenseCAP/Wio_Tracker_L2/L2First.png',
 });
+// Change these project IDs explicitly when updating the activity showcase.
+// New catalog submissions must not replace the selected examples or previews.
+export const L2_SHOWCASE = Object.freeze({
+  examples: Object.freeze({
+    '3D Prints & Enclosures': null,
+    Firmware: 'cairn',
+    Hardware: null,
+    APP: 'meshcore-open-images',
+    IOT: null,
+    'Intelligent System': 'meshcore-open-images',
+    Others: 'community-18',
+  }),
+  community: Object.freeze(['community-18', 'meshcore-solo', 'community-14']),
+});
 export const MILESTONES = Object.freeze([
   {id:'reddit', name:'Reddit', threshold:200, metric:'upvotes', hosts:['reddit.com','www.reddit.com'], detail:'on a single post'},
   {id:'facebook', name:'Facebook', threshold:100, metric:'likes', hosts:['facebook.com','www.facebook.com','m.facebook.com'], detail:'on a single post (excluding other reactions)'},
