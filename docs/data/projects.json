@@ -1,5 +1,70 @@
 [
   {
+    "id": "meshcore-solo",
+    "title": "MeshCore Solo · Standalone Messaging & Navigation",
+    "author": "MarekZegare4 / MeshCore Solo contributors",
+    "description": "Use MeshCore directly on Wio Tracker L1 or L2 Pro for channel chats, direct messages, GPS trails, waypoints, and navigation without a phone. L2 adds a color touch interface, offline maps and message history on microSD, plus Wi-Fi updates. The MeshCore app can still connect, and the official website lets you try the firmware in a live browser simulation.",
+    "categories": [
+      "Firmware"
+    ],
+    "products": [
+      "Wio Tracker L1/E-ink",
+      "Wio Tracker L2 Pro"
+    ],
+    "devices": [
+      "Wio Tracker L1 (128 x 64 OLED or 2.13-inch e-ink)",
+      "Wio Tracker L2 Pro (Wio-Tracker-L2 firmware target, 320 x 240 touch LCD)",
+      "microSD card for L2 offline maps and message history"
+    ],
+    "tags": [
+      "MeshCore",
+      "Solo",
+      "Standalone messaging",
+      "GPS navigation",
+      "Offline maps",
+      "WebAssembly"
+    ],
+    "url": "https://solo.marekzegarek.com/",
+    "image": "https://solo.marekzegarek.com/assets/og-image.png?v=8",
+    "imageAlt": "Official MeshCore Solo artwork showing its logo over a pixel-art mountain landscape and radio repeater tower.",
+    "source": "https://github.com/MarekZegare4/MeshCore-Solo",
+    "setup": [
+      "Try the live firmware simulation on the official website, then check the supported-device list and choose the release matching your exact board and display. Large e-ink L1 variants are experimental.",
+      "When switching from stock MeshCore or another firmware, back up your data in the companion app and follow Solo's erase-flash instructions before installing. For later Solo updates, check the release notes.",
+      "For Wio Tracker L1, double-press reset to enter the USB boot drive and copy the matching UF2. For Wio Tracker L2, flash its merged binary at offset 0x0 using MeshCore Flasher or esptool, following the project guide.",
+      "Configure the regional radio settings and channels, then use the joystick or touch screen for messages, contacts, waypoints, and GPS navigation. Connect the MeshCore phone app when needed.",
+      "For L2 offline maps and message history, prepare a microSD card using the hardware and navigation guides. Later L2 firmware updates are available through Settings > System > Firmware update over Wi-Fi."
+    ],
+    "resources": [
+      {
+        "label": "Official website & live demo",
+        "url": "https://solo.marekzegarek.com/"
+      },
+      {
+        "label": "GitHub source & supported boards",
+        "url": "https://github.com/MarekZegare4/MeshCore-Solo"
+      },
+      {
+        "label": "Latest firmware release",
+        "url": "https://github.com/MarekZegare4/MeshCore-Solo/releases/latest"
+      },
+      {
+        "label": "User guide & setup",
+        "url": "https://github.com/MarekZegare4/MeshCore-Solo/blob/main/docs/solo/README.md"
+      },
+      {
+        "label": "Navigation & offline maps",
+        "url": "https://github.com/MarekZegare4/MeshCore-Solo/blob/main/docs/solo/navigation.md"
+      },
+      {
+        "label": "Hardware & microSD setup",
+        "url": "https://github.com/MarekZegare4/MeshCore-Solo/blob/main/docs/solo/hardware.md"
+      }
+    ],
+    "addedAt": "2026-11-13",
+    "activity": null
+  },
+  {
     "id": "community-14",
     "title": "Wio Tracker L2 Pro — On-device Speech-to-Text for Meshtastic",
     "author": "zxw19",
