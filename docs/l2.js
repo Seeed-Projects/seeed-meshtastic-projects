@@ -1,5 +1,5 @@
 import { mountProjectForm } from './project-form.js?v=20261105-required-email';
-import { L2, MILESTONES, validPostUrl } from './l2-config.js?v=20261103-purchase';
+import { L2, L2_SHOWCASE, MILESTONES, validPostUrl } from './l2-config.js?v=20261113-fixed-showcase';
 import { issueDraft, approvedL2Projects } from './form-utils.js';
 import { REPO_URL } from './config.js';
 import { encryptApprovalContact, approvalContactAvailable } from './notification-contact.js';
@@ -83,20 +83,19 @@ $('share-copy').addEventListener('click',async()=>{
 });
 function openLinkedForm(){if(location.hash==='#submit-social')openShareDialog();}
 window.addEventListener('hashchange',openLinkedForm);openLinkedForm();
-// Idea cards use published L2 Pro projects, independently of reward activity enrollment.
-// The community card previews the whole Mesh Hub.
+// Resolve only the configured showcase IDs; catalog dates never select examples.
 const coverUrl=value=>{try{const u=new URL(value);return u.protocol==='https:' && !u.username && !u.password ? u.href : '';}catch{return '';}};
-const withCover=projects=>projects.filter(p=>coverUrl(p.image)).sort((a,b)=>b.addedAt.localeCompare(a.addedAt));
 function renderExamples(projects) {
-  const hub=withCover(projects), pool=hub.filter(p=>Array.isArray(p.products) && p.products.includes(L2.product)), used=new Set();
+  const hub=new Map(projects.filter(p=>coverUrl(p.image)).map(p=>[p.id,p]));
   for(const card of document.querySelectorAll('[data-idea]')) {
-    const match=pool.find(p=>p.categories.includes(card.dataset.idea) && !used.has(p.id)) || pool.find(p=>p.categories.includes(card.dataset.idea));
+    const selected=hub.get(L2_SHOWCASE.examples[card.dataset.idea]);
+    const match=Array.isArray(selected?.products) && selected.products.includes(L2.product) && Array.isArray(selected.categories) && selected.categories.includes(card.dataset.idea) ? selected : null;
     const example=document.createElement(match ? 'a' : 'button');example.className='idea-example';
-    if(match){used.add(match.id);example.href=`./?project=${encodeURIComponent(match.id)}#projects`;const img=new Image();img.src=coverUrl(match.image);img.alt=match.imageAlt || match.title;img.loading='lazy';img.decoding='async';const caption=document.createElement('span');caption.textContent=`Example · ${match.title}`;example.append(img,caption);}
+    if(match){example.href=`./?project=${encodeURIComponent(match.id)}#projects`;const img=new Image();img.src=coverUrl(match.image);img.alt=match.imageAlt || match.title;img.loading='lazy';img.decoding='async';const caption=document.createElement('span');caption.textContent=`Example · ${match.title}`;example.append(img,caption);}
     else{example.type='button';example.dataset.openProject='';example.innerHTML='<span class="idea-empty">Your build could be the first example here.</span>';example.addEventListener('click',()=>document.querySelector('.hero-actions [data-open-project]').click());}
-    card.append(example);
+    const previous=card.querySelector('.idea-example');if(previous)previous.replaceWith(example);else card.append(example);
   }
-  $('community-demos').replaceChildren(...hub.slice(0,3).map(p=>{const img=new Image();img.src=coverUrl(p.image);img.alt='';img.loading='lazy';img.decoding='async';return img;}));
+  $('community-demos').replaceChildren(...L2_SHOWCASE.community.map(id=>hub.get(id)).filter(Boolean).map(p=>{const img=new Image();img.src=coverUrl(p.image);img.alt='';img.loading='lazy';img.decoding='async';return img;}));
 }
 async function loadProjectCatalog() {
   try {
